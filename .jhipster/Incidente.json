@@ -1,0 +1,110 @@
+{
+  "annotations": {
+    "changelogDate": "20231204223723"
+  },
+  "applications": ["oncall"],
+  "documentation": "Incidente: la interrupcion real que estamos gestionando.\\nLas marcas de tiempo son la materia prima del MTTA y el MTTR.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "titulo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "140"
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "TextBlob"
+    },
+    {
+      "fieldName": "severidad",
+      "fieldType": "Severidad",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "SEV1,SEV2,SEV3,SEV4"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "EstadoIncidente",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ABIERTO,RECONOCIDO,MITIGADO,RESUELTO,CERRADO"
+    },
+    {
+      "fieldName": "detectadoEn",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "reconocidoEn",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "mitigadoEn",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "resueltoEn",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "usuariosAfectados",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "cumplioObjetivo",
+      "fieldType": "Boolean"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Incidente",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "comandante",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
+    },
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "servicio",
+      "otherEntityRelationshipName": "incidente",
+      "relationshipName": "servicio",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "postmortem",
+      "otherEntityRelationshipName": "incidente",
+      "relationshipName": "postmortem",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "alerta",
+      "otherEntityRelationshipName": "incidente",
+      "relationshipName": "alerta",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "eventoDeIncidente",
+      "otherEntityRelationshipName": "incidente",
+      "relationshipName": "evento",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "notificacion",
+      "otherEntityRelationshipName": "incidente",
+      "relationshipName": "notificacion",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

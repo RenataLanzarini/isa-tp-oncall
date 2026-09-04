@@ -1,0 +1,47 @@
+{
+  "annotations": {
+    "changelogDate": "20231204223323"
+  },
+  "applications": ["oncall"],
+  "documentation": "Equipo responsable de uno o mas servicios en produccion.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "emailContacto",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "120"
+    },
+    {
+      "fieldName": "canalChat",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    }
+  ],
+  "name": "Equipo",
+  "relationships": [
+    {
+      "otherEntityName": "servicio",
+      "otherEntityRelationshipName": "equipo",
+      "relationshipName": "servicio",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "rotacion",
+      "otherEntityRelationshipName": "equipo",
+      "relationshipName": "rotacion",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

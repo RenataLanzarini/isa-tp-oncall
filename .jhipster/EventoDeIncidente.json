@@ -1,0 +1,47 @@
+{
+  "annotations": {
+    "changelogDate": "20231204223823"
+  },
+  "applications": ["oncall"],
+  "documentation": "Linea de tiempo del incidente. Cada cosa que pasa deja una entrada.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "tipo",
+      "fieldType": "TipoEvento",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "CREACION,ASIGNACION,ESCALAMIENTO,NOTA,CAMBIO_DE_ESTADO,RESOLUCION"
+    },
+    {
+      "fieldName": "detalle",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    },
+    {
+      "fieldName": "ocurridoEn",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "automatico",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "EventoDeIncidente",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityField": "titulo",
+      "otherEntityName": "incidente",
+      "otherEntityRelationshipName": "evento",
+      "relationshipName": "incidente",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

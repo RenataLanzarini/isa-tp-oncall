@@ -1,0 +1,50 @@
+{
+  "annotations": {
+    "changelogDate": "20231204224123"
+  },
+  "applications": ["oncall"],
+  "documentation": "Politica de escalamiento de un servicio: a quien se avisa,\\nen que orden y cuanto se espera antes de subir un escalon.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "repetirVeces",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "5",
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "name": "PoliticaEscalamiento",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "servicio",
+      "otherEntityRelationshipName": "politica",
+      "relationshipName": "servicio",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "pasoEscalamiento",
+      "otherEntityRelationshipName": "politica",
+      "relationshipName": "paso",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,54 @@
+{
+  "annotations": {
+    "changelogDate": "20231204224023"
+  },
+  "applications": ["oncall"],
+  "documentation": "Ventana concreta de tiempo en la que una persona esta de guardia.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "desde",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "hasta",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "esReemplazo",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "nota",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    }
+  ],
+  "name": "TurnoDeGuardia",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "rotacion",
+      "otherEntityRelationshipName": "turno",
+      "relationshipName": "rotacion",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "responsable",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

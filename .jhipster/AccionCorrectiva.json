@@ -1,0 +1,60 @@
+{
+  "annotations": {
+    "changelogDate": "20231204224523"
+  },
+  "applications": ["oncall"],
+  "documentation": "Compromiso concreto que sale del postmortem.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "300"
+    },
+    {
+      "fieldName": "prioridad",
+      "fieldType": "Prioridad",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ALTA,MEDIA,BAJA"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "EstadoAccion",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PENDIENTE,EN_CURSO,COMPLETADA,DESCARTADA"
+    },
+    {
+      "fieldName": "fechaLimite",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "ticketUrl",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    }
+  ],
+  "name": "AccionCorrectiva",
+  "relationships": [
+    {
+      "otherEntityField": "titulo",
+      "otherEntityName": "postmortem",
+      "otherEntityRelationshipName": "accion",
+      "relationshipName": "postmortem",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "responsable",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

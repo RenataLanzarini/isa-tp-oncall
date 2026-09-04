@@ -1,0 +1,49 @@
+{
+  "annotations": {
+    "changelogDate": "20231204223523"
+  },
+  "applications": ["oncall"],
+  "documentation": "Objetivo de nivel de servicio (SLO) que despues usamos para saber\\nsi respondimos a tiempo.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "tipo",
+      "fieldType": "TipoObjetivo",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "TIEMPO_DE_RECONOCIMIENTO,TIEMPO_DE_RESOLUCION,DISPONIBILIDAD"
+    },
+    {
+      "fieldName": "severidadAplicable",
+      "fieldType": "Severidad",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "SEV1,SEV2,SEV3,SEV4"
+    },
+    {
+      "fieldName": "minutosObjetivo",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "10080",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    }
+  ],
+  "name": "ObjetivoDeServicio",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "servicio",
+      "otherEntityRelationshipName": "objetivo",
+      "relationshipName": "servicio",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

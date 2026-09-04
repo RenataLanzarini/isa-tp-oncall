@@ -1,0 +1,66 @@
+{
+  "annotations": {
+    "changelogDate": "20231204223623"
+  },
+  "applications": ["oncall"],
+  "documentation": "Senal cruda que llega desde una herramienta de monitoreo.\\nEl fingerprint es la clave de deduplicacion: varias alertas con el\\nmismo fingerprint deberian colapsar en un unico incidente.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "fingerprint",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "120"
+    },
+    {
+      "fieldName": "origen",
+      "fieldType": "OrigenAlerta",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PROMETHEUS,DATADOG,CLOUDWATCH,HEALTHCHECK,MANUAL"
+    },
+    {
+      "fieldName": "resumen",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "200"
+    },
+    {
+      "fieldName": "payload",
+      "fieldType": "TextBlob"
+    },
+    {
+      "fieldName": "recibidaEn",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "procesada",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Alerta",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "servicio",
+      "otherEntityRelationshipName": "alerta",
+      "relationshipName": "servicio",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "titulo",
+      "otherEntityName": "incidente",
+      "otherEntityRelationshipName": "alerta",
+      "relationshipName": "incidente",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "oncall",
+    "buildTool": "maven",
+    "cacheProvider": "ehcache",
+    "clientFramework": "angular",
+    "clientTheme": "flatly",
+    "creationTimestamp": 1701729143509,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "enableHibernateCache": true,
+    "enableTranslation": true,
+    "entities": [
+      "Equipo",
+      "Servicio",
+      "ObjetivoDeServicio",
+      "Alerta",
+      "Incidente",
+      "EventoDeIncidente",
+      "Rotacion",
+      "TurnoDeGuardia",
+      "PoliticaEscalamiento",
+      "PasoEscalamiento",
+      "Notificacion",
+      "Postmortem",
+      "AccionCorrectiva"
+    ],
+    "jhipsterVersion": "9.2.0",
+    "jwtSecretKey": "YzNkNTk3OGFlMTM1Y2Y3ODEzYzM2ZDcyMmI5ODUxODU5ZjM4NDY1N2I2MTM2YTYwYzQ5MGE3YmMxMDYyNTQ0ZWI2OTUzZWFkMWRhMDQ4M2VhZDExZjExZmU2ZTg1ZTk3NWM2NjI1YjU4MmE4ODI3ZTRiNjdlN2Q5NTU0YTJiYzE=",
+    "languages": ["es", "en"],
+    "lastLiquibaseTimestamp": 1701729923000,
+    "nativeLanguage": "es",
+    "packageName": "ar.edu.um.isa.oncall",
+    "prodDatabaseType": "postgresql",
+    "testFrameworks": ["cypress"]
+  }
+}

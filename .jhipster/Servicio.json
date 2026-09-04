@@ -1,0 +1,88 @@
+{
+  "annotations": {
+    "changelogDate": "20231204223423"
+  },
+  "applications": ["oncall"],
+  "documentation": "Un servicio desplegado. Es la unidad sobre la que se abren incidentes.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    },
+    {
+      "fieldName": "criticidad",
+      "fieldType": "Criticidad",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "TIER1,TIER2,TIER3"
+    },
+    {
+      "fieldName": "entorno",
+      "fieldType": "Entorno",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PRODUCCION,STAGING,DESARROLLO"
+    },
+    {
+      "fieldName": "repositorioUrl",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    },
+    {
+      "fieldName": "activo",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Servicio",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "equipo",
+      "otherEntityRelationshipName": "servicio",
+      "relationshipName": "equipo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "objetivoDeServicio",
+      "otherEntityRelationshipName": "servicio",
+      "relationshipName": "objetivo",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "alerta",
+      "otherEntityRelationshipName": "servicio",
+      "relationshipName": "alerta",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "politicaEscalamiento",
+      "otherEntityRelationshipName": "servicio",
+      "relationshipName": "politica",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "incidente",
+      "otherEntityRelationshipName": "servicio",
+      "relationshipName": "incidente",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

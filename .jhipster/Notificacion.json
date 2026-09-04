@@ -1,0 +1,70 @@
+{
+  "annotations": {
+    "changelogDate": "20231204224323"
+  },
+  "applications": ["oncall"],
+  "documentation": "Intento de avisarle a una persona por un canal.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "canal",
+      "fieldType": "Canal",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "EMAIL,SMS,PUSH,WEBHOOK,LLAMADA"
+    },
+    {
+      "fieldName": "destino",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "120"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "EstadoNotificacion",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PENDIENTE,ENVIADA,ENTREGADA,FALLIDA,RECONOCIDA"
+    },
+    {
+      "fieldName": "enviadaEn",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "intentos",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "10",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "errorMensaje",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Notificacion",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityField": "titulo",
+      "otherEntityName": "incidente",
+      "otherEntityRelationshipName": "notificacion",
+      "relationshipName": "incidente",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "destinatario",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

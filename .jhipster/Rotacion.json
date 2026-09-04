@@ -1,0 +1,61 @@
+{
+  "annotations": {
+    "changelogDate": "20231204223923"
+  },
+  "applications": ["oncall"],
+  "documentation": "Rotacion de guardia de un equipo. Define el patron; los turnos\\nconcretos viven en TurnoDeGuardia.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "tipo",
+      "fieldType": "TipoRotacion",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "DIARIA,SEMANAL,PERSONALIZADA"
+    },
+    {
+      "fieldName": "zonaHoraria",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "activa",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Rotacion",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "equipo",
+      "otherEntityRelationshipName": "rotacion",
+      "relationshipName": "equipo",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "turnoDeGuardia",
+      "otherEntityRelationshipName": "rotacion",
+      "relationshipName": "turno",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "pasoEscalamiento",
+      "otherEntityRelationshipName": "rotacion",
+      "relationshipName": "paso",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

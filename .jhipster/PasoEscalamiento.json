@@ -1,0 +1,60 @@
+{
+  "annotations": {
+    "changelogDate": "20231204224223"
+  },
+  "applications": ["oncall"],
+  "documentation": "Un escalon de la politica.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "orden",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "10",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "esperaMinutos",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "120",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "canal",
+      "fieldType": "Canal",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "EMAIL,SMS,PUSH,WEBHOOK,LLAMADA"
+    }
+  ],
+  "name": "PasoEscalamiento",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "politicaEscalamiento",
+      "otherEntityRelationshipName": "paso",
+      "relationshipName": "politica",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "rotacion",
+      "otherEntityRelationshipName": "paso",
+      "relationshipName": "rotacion",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "destinatarioDirecto",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipWithBuiltInEntity": true
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}
