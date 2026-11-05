@@ -33,11 +33,8 @@ El proyecto base no contiene un proceso automático que transforme alertas en in
 
 ## Regla C: quién está de guardia
 
-> Sección reservada para completar personalmente.
+La consulta recibe una rotación y un `Instant`. Un turno cubre el instante cuando `desde <= instante < hasta`: el inicio está incluido y el final excluido, evitando duplicar cobertura entre turnos consecutivos. Si la rotación no existe se responde 404; si está inactiva se devuelve el estado `ROTACION_INACTIVA`; y si no hay turnos coincidentes se devuelve 200 con `SIN_COBERTURA`, sin excepción.
 
-- Decisiones tomadas ante solapamientos y múltiples responsables:
-- Respuesta elegida cuando no existe cobertura:
-- Tratamiento de zonas horarias y horario de verano:
-- Prioridad de reemplazos frente a la rotación regular:
-- Servicio y endpoints implementados:
-- Casos de prueba y forma de verificación:
+Los turnos superpuestos se devuelven completos. El modelo sólo distingue `esReemplazo`, por lo que los roles expuestos son `HABITUAL` y `REEMPLAZO`; no se inventan roles primario/secundario. Cuando existe al menos un reemplazo, todos los turnos siguen en la respuesta para conservar trazabilidad, pero sólo los reemplazos se marcan como operativos. Sin reemplazos, todos los responsables habituales coincidentes son operativos.
+
+Los turnos usan instantes absolutos, por lo que la comparación no depende de la zona del servidor y sigue siendo inequívoca durante cambios de horario de verano. La respuesta conserva la zona IANA configurada en la rotación. Se verificaron guardia normal, superposiciones, ausencia de cobertura, reemplazos, responsables simultáneos, límites exactos, cambio de horario de verano y rotaciones inexistentes o inactivas mediante pruebas de integración del endpoint `GET /api/rotacions/{id}/guardia?instante=...`.
