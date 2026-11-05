@@ -80,6 +80,8 @@ public class ServicioCriteria implements Serializable, Criteria {
 
     private LongFilter alertaId;
 
+    private LongFilter servicioEnVentanaId;
+
     private LongFilter politicaId;
 
     private LongFilter incidenteId;
@@ -99,6 +101,7 @@ public class ServicioCriteria implements Serializable, Criteria {
         this.equipoId = other.optionalEquipoId().map(LongFilter::copy).orElse(null);
         this.objetivoId = other.optionalObjetivoId().map(LongFilter::copy).orElse(null);
         this.alertaId = other.optionalAlertaId().map(LongFilter::copy).orElse(null);
+        this.servicioEnVentanaId = other.optionalServicioEnVentanaId().map(LongFilter::copy).orElse(null);
         this.politicaId = other.optionalPoliticaId().map(LongFilter::copy).orElse(null);
         this.incidenteId = other.optionalIncidenteId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
@@ -299,6 +302,25 @@ public class ServicioCriteria implements Serializable, Criteria {
         this.alertaId = alertaId;
     }
 
+    public LongFilter getServicioEnVentanaId() {
+        return servicioEnVentanaId;
+    }
+
+    public Optional<LongFilter> optionalServicioEnVentanaId() {
+        return Optional.ofNullable(servicioEnVentanaId);
+    }
+
+    public LongFilter servicioEnVentanaId() {
+        if (servicioEnVentanaId == null) {
+            setServicioEnVentanaId(new LongFilter());
+        }
+        return servicioEnVentanaId;
+    }
+
+    public void setServicioEnVentanaId(LongFilter servicioEnVentanaId) {
+        this.servicioEnVentanaId = servicioEnVentanaId;
+    }
+
     public LongFilter getPoliticaId() {
         return politicaId;
     }
@@ -376,6 +398,7 @@ public class ServicioCriteria implements Serializable, Criteria {
             Objects.equals(equipoId, that.equipoId) &&
             Objects.equals(objetivoId, that.objetivoId) &&
             Objects.equals(alertaId, that.alertaId) &&
+            Objects.equals(servicioEnVentanaId, that.servicioEnVentanaId) &&
             Objects.equals(politicaId, that.politicaId) &&
             Objects.equals(incidenteId, that.incidenteId) &&
             Objects.equals(distinct, that.distinct)
@@ -395,6 +418,7 @@ public class ServicioCriteria implements Serializable, Criteria {
             equipoId,
             objetivoId,
             alertaId,
+            servicioEnVentanaId,
             politicaId,
             incidenteId,
             distinct
@@ -415,6 +439,7 @@ public class ServicioCriteria implements Serializable, Criteria {
             optionalEquipoId().map(f -> "equipoId=" + f + ", ").orElse("") +
             optionalObjetivoId().map(f -> "objetivoId=" + f + ", ").orElse("") +
             optionalAlertaId().map(f -> "alertaId=" + f + ", ").orElse("") +
+            optionalServicioEnVentanaId().map(f -> "servicioEnVentanaId=" + f + ", ").orElse("") +
             optionalPoliticaId().map(f -> "politicaId=" + f + ", ").orElse("") +
             optionalIncidenteId().map(f -> "incidenteId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +

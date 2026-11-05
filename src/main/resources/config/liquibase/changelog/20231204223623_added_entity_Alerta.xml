@@ -23,7 +23,7 @@
             <column name="resumen" type="varchar(200)">
                 <constraints nullable="false" />
             </column>
-            <column name="payload" type="${clobType}">
+            <column name="payload" type="varchar(4000)">
                 <constraints nullable="true" />
             </column>
             <column name="recibida_en" type="${datetimeType}">
@@ -64,7 +64,7 @@
             <column name="fingerprint" type="string"/>
             <column name="origen" type="string"/>
             <column name="resumen" type="string"/>
-            <column name="payload" type="clob"/>
+            <column name="payload" type="string"/>
             <column name="recibida_en" type="date"/>
             <column name="procesada" type="boolean"/>
             <column name="servicio_id" type="numeric"/>

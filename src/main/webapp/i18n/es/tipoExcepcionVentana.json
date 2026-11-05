@@ -1,0 +1,9 @@
+{
+  "oncallApp": {
+    "TipoExcepcionVentana": {
+      "null": "",
+      "INCLUSION": "INCLUSION",
+      "CANCELACION": "CANCELACION"
+    }
+  }
+}

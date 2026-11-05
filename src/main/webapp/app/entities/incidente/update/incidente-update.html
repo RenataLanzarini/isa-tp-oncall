@@ -33,15 +33,26 @@
           }
         </div>
 
+        @let descripcionRef = editForm.get('descripcion')!;
         <div class="mb-3">
           <label class="form-label" for="field_descripcion" jhiTranslate="oncallApp.incidente.descripcion">Descripcion</label>
-          <textarea
+          <input
+            type="text"
             class="form-control"
             name="descripcion"
             id="field_descripcion"
             data-cy="descripcion"
             formControlName="descripcion"
-          ></textarea>
+          />
+          @if (descripcionRef.invalid && (descripcionRef.dirty || descripcionRef.touched)) {
+            <div>
+              @if (descripcionRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >Este campo no puede superar más de 2000 caracteres.</small
+                >
+              }
+            </div>
+          }
         </div>
 
         @let severidadRef = editForm.get('severidad')!;

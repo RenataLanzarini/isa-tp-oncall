@@ -1,0 +1,9 @@
+{
+  "oncallApp": {
+    "TipoVentana": {
+      "null": "",
+      "UNICA": "UNICA",
+      "SEMANAL": "SEMANAL"
+    }
+  }
+}

@@ -244,6 +244,23 @@ class PostmortemResourceIT {
 
     @Test
     @Transactional
+    void checkCausaRaizIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        postmortem.setCausaRaiz(null);
+
+        // Create the Postmortem, which fails.
+        PostmortemDTO postmortemDTO = postmortemMapper.toDto(postmortem);
+
+        restPostmortemMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(postmortemDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkPublicadoIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null

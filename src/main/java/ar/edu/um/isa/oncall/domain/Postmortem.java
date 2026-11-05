@@ -39,16 +39,17 @@ public class Postmortem implements Serializable {
     @Column(name = "resumen", length = 500, nullable = false)
     private String resumen;
 
-    @Lob
-    @Column(name = "causa_raiz", nullable = false)
+    @NotNull
+    @Size(max = 2000)
+    @Column(name = "causa_raiz", length = 2000, nullable = false)
     private String causaRaiz;
 
-    @Lob
-    @Column(name = "linea_de_tiempo")
+    @Size(max = 4000)
+    @Column(name = "linea_de_tiempo", length = 4000)
     private String lineaDeTiempo;
 
-    @Lob
-    @Column(name = "lecciones_aprendidas")
+    @Size(max = 2000)
+    @Column(name = "lecciones_aprendidas", length = 2000)
     private String leccionesAprendidas;
 
     @NotNull

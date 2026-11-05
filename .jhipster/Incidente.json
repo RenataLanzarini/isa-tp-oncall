@@ -14,7 +14,9 @@
     },
     {
       "fieldName": "descripcion",
-      "fieldType": "TextBlob"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "2000"
     },
     {
       "fieldName": "severidad",

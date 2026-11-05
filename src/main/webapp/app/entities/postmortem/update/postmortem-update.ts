@@ -7,12 +7,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Observable, finalize, map } from 'rxjs';
 
-import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
-import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { IIncidente } from 'app/entities/incidente/incidente.model';
 import { IncidenteService } from 'app/entities/incidente/service/incidente.service';
 import { AlertError } from 'app/shared/alert/alert-error';
-import { AlertErrorModel } from 'app/shared/alert/alert-error.model';
 import { TranslateDirective } from 'app/shared/language';
 import { IPostmortem } from '../postmortem.model';
 import { PostmortemService } from '../service/postmortem.service';
@@ -31,8 +28,6 @@ export class PostmortemUpdate implements OnInit {
 
   incidentesCollection = signal<IIncidente[]>([]);
 
-  protected dataUtils = inject(DataUtils);
-  protected eventManager = inject(EventManager);
   protected postmortemService = inject(PostmortemService);
   protected postmortemFormService = inject(PostmortemFormService);
   protected incidenteService = inject(IncidenteService);
@@ -51,21 +46,6 @@ export class PostmortemUpdate implements OnInit {
       }
 
       this.loadRelationshipsOptions();
-    });
-  }
-
-  byteSize(base64String: string): string {
-    return this.dataUtils.byteSize(base64String);
-  }
-
-  openFile(base64String: string, contentType: string | null | undefined): void {
-    this.dataUtils.openFile(base64String, contentType);
-  }
-
-  setFileData(event: Event, field: string, isImage: boolean): void {
-    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
-      error: (err: FileLoadError) =>
-        this.eventManager.broadcast(new EventWithContent<AlertErrorModel>('oncallApp.error', { ...err, key: `error.file.${err.key}` })),
     });
   }
 

@@ -497,6 +497,56 @@ class AlertaResourceIT {
 
     @Test
     @Transactional
+    void getAllAlertasByPayloadIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedAlerta = alertaRepository.saveAndFlush(alerta);
+
+        // Get all the alertaList where payload equals to
+        defaultAlertaFiltering("payload.equals=" + DEFAULT_PAYLOAD, "payload.equals=" + UPDATED_PAYLOAD);
+    }
+
+    @Test
+    @Transactional
+    void getAllAlertasByPayloadIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedAlerta = alertaRepository.saveAndFlush(alerta);
+
+        // Get all the alertaList where payload in
+        defaultAlertaFiltering("payload.in=" + DEFAULT_PAYLOAD + "," + UPDATED_PAYLOAD, "payload.in=" + UPDATED_PAYLOAD);
+    }
+
+    @Test
+    @Transactional
+    void getAllAlertasByPayloadIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedAlerta = alertaRepository.saveAndFlush(alerta);
+
+        // Get all the alertaList where payload is not null
+        defaultAlertaFiltering("payload.specified=true", "payload.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllAlertasByPayloadContainsSomething() throws Exception {
+        // Initialize the database
+        insertedAlerta = alertaRepository.saveAndFlush(alerta);
+
+        // Get all the alertaList where payload contains
+        defaultAlertaFiltering("payload.contains=" + DEFAULT_PAYLOAD, "payload.contains=" + UPDATED_PAYLOAD);
+    }
+
+    @Test
+    @Transactional
+    void getAllAlertasByPayloadNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedAlerta = alertaRepository.saveAndFlush(alerta);
+
+        // Get all the alertaList where payload does not contain
+        defaultAlertaFiltering("payload.doesNotContain=" + UPDATED_PAYLOAD, "payload.doesNotContain=" + DEFAULT_PAYLOAD);
+    }
+
+    @Test
+    @Transactional
     void getAllAlertasByRecibidaEnIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedAlerta = alertaRepository.saveAndFlush(alerta);

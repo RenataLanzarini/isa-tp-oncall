@@ -1,0 +1,44 @@
+{
+  "annotations": {
+    "changelogDate": "20231204224423"
+  },
+  "applications": ["oncall"],
+  "documentation": "Asignacion explicita de una ventana de mantenimiento a un servicio.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "activo",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nota",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    }
+  ],
+  "name": "ServicioEnVentana",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "servicio",
+      "otherEntityRelationshipName": "servicioEnVentana",
+      "relationshipName": "servicio",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "ventanaDeMantenimiento",
+      "otherEntityRelationshipName": "servicioEnVentana",
+      "relationshipName": "ventana",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

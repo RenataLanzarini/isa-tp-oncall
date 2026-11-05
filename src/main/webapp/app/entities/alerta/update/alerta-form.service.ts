@@ -69,7 +69,9 @@ export class AlertaFormService {
       resumen: new FormControl(alertaRawValue.resumen, {
         validators: [Validators.required, Validators.maxLength(200)],
       }),
-      payload: new FormControl(alertaRawValue.payload),
+      payload: new FormControl(alertaRawValue.payload, {
+        validators: [Validators.maxLength(4000)],
+      }),
       recibidaEn: new FormControl(alertaRawValue.recibidaEn, {
         validators: [Validators.required],
       }),

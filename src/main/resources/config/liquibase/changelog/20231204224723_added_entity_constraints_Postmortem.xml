@@ -6,22 +6,15 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
     <!--
-        Added the constraints for entity Notificacion.
+        Added the constraints for entity Postmortem.
     -->
-    <changeSet id="20231204224323-2" author="jhipster">
+    <changeSet id="20231204224723-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="incidente_id"
-                                 baseTableName="notificacion"
-                                 constraintName="fk_notificacion__incidente_id"
+                                 baseTableName="postmortem"
+                                 constraintName="fk_postmortem__incidente_id"
                                  referencedColumnNames="id"
                                  referencedTableName="incidente"
-                                 />
-
-        <addForeignKeyConstraint baseColumnNames="destinatario_id"
-                                 baseTableName="notificacion"
-                                 constraintName="fk_notificacion__destinatario_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"
                                  />
     </changeSet>
 </databaseChangeLog>

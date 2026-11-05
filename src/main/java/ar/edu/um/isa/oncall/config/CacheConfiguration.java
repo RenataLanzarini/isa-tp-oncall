@@ -50,6 +50,7 @@ public class CacheConfiguration {
             createCache(cm, ar.edu.um.isa.oncall.domain.Servicio.class.getName());
             createCache(cm, ar.edu.um.isa.oncall.domain.Servicio.class.getName() + ".objetivos");
             createCache(cm, ar.edu.um.isa.oncall.domain.Servicio.class.getName() + ".alertas");
+            createCache(cm, ar.edu.um.isa.oncall.domain.Servicio.class.getName() + ".servicioEnVentanas");
             createCache(cm, ar.edu.um.isa.oncall.domain.Servicio.class.getName() + ".politicas");
             createCache(cm, ar.edu.um.isa.oncall.domain.Servicio.class.getName() + ".incidentes");
             createCache(cm, ar.edu.um.isa.oncall.domain.ObjetivoDeServicio.class.getName());
@@ -67,6 +68,11 @@ public class CacheConfiguration {
             createCache(cm, ar.edu.um.isa.oncall.domain.PoliticaEscalamiento.class.getName());
             createCache(cm, ar.edu.um.isa.oncall.domain.PoliticaEscalamiento.class.getName() + ".pasos");
             createCache(cm, ar.edu.um.isa.oncall.domain.PasoEscalamiento.class.getName());
+            createCache(cm, ar.edu.um.isa.oncall.domain.VentanaDeMantenimiento.class.getName());
+            createCache(cm, ar.edu.um.isa.oncall.domain.VentanaDeMantenimiento.class.getName() + ".servicioEnVentanas");
+            createCache(cm, ar.edu.um.isa.oncall.domain.VentanaDeMantenimiento.class.getName() + ".excepcions");
+            createCache(cm, ar.edu.um.isa.oncall.domain.ServicioEnVentana.class.getName());
+            createCache(cm, ar.edu.um.isa.oncall.domain.ExcepcionDeVentana.class.getName());
             createCache(cm, ar.edu.um.isa.oncall.domain.Notificacion.class.getName());
             createCache(cm, ar.edu.um.isa.oncall.domain.Postmortem.class.getName());
             createCache(cm, ar.edu.um.isa.oncall.domain.Postmortem.class.getName() + ".accions");

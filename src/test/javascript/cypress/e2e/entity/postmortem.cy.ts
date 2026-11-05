@@ -14,12 +14,7 @@ describe('Postmortem e2e test', () => {
   const postmortemPageUrl = '/postmortem';
   let username: string;
   let password: string;
-  const postmortemSample = {
-    titulo: 'manipulate',
-    resumen: 'eyebrow pfft',
-    causaRaiz: 'Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci50eHQ=',
-    publicado: true,
-  };
+  const postmortemSample = { titulo: 'duh since', resumen: 'past feminize far', causaRaiz: 'incidentally', publicado: true };
 
   let postmortem;
   let incidente;
@@ -41,14 +36,14 @@ describe('Postmortem e2e test', () => {
       url: '/api/incidentes',
       body: {
         titulo: 'customise uh-huh small',
-        descripcion: 'Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci50eHQ=',
-        severidad: 'SEV4',
-        estado: 'ABIERTO',
-        detectadoEn: '2023-12-04T02:50:23.730Z',
-        reconocidoEn: '2023-12-04T12:42:17.341Z',
-        mitigadoEn: '2023-12-03T23:12:43.184Z',
-        resueltoEn: '2023-12-04T14:57:26.545Z',
-        usuariosAfectados: 7351,
+        descripcion: 'afore since round',
+        severidad: 'SEV3',
+        estado: 'MITIGADO',
+        detectadoEn: '2023-12-04T10:14:48.875Z',
+        reconocidoEn: '2023-12-04T14:55:40.944Z',
+        mitigadoEn: '2023-12-04T10:19:22.799Z',
+        resueltoEn: '2023-12-04T08:25:24.412Z',
+        usuariosAfectados: 21711,
         cumplioObjetivo: true,
       },
     }).then(({ body }) => {
@@ -231,22 +226,22 @@ describe('Postmortem e2e test', () => {
       cy.get(`[data-cy="resumen"]`).type('once');
       cy.get(`[data-cy="resumen"]`).should('have.value', 'once');
 
-      cy.get(`[data-cy="causaRaiz"]`).type('../fake-data/blob/hipster.txt');
-      cy.get(`[data-cy="causaRaiz"]`).invoke('val').should('match', new RegExp('../fake-data/blob/hipster.txt'));
+      cy.get(`[data-cy="causaRaiz"]`).type('gah hmph how');
+      cy.get(`[data-cy="causaRaiz"]`).should('have.value', 'gah hmph how');
 
-      cy.get(`[data-cy="lineaDeTiempo"]`).type('../fake-data/blob/hipster.txt');
-      cy.get(`[data-cy="lineaDeTiempo"]`).invoke('val').should('match', new RegExp('../fake-data/blob/hipster.txt'));
+      cy.get(`[data-cy="lineaDeTiempo"]`).type('how');
+      cy.get(`[data-cy="lineaDeTiempo"]`).should('have.value', 'how');
 
-      cy.get(`[data-cy="leccionesAprendidas"]`).type('../fake-data/blob/hipster.txt');
-      cy.get(`[data-cy="leccionesAprendidas"]`).invoke('val').should('match', new RegExp('../fake-data/blob/hipster.txt'));
+      cy.get(`[data-cy="leccionesAprendidas"]`).type('knowledgeably contrast alive');
+      cy.get(`[data-cy="leccionesAprendidas"]`).should('have.value', 'knowledgeably contrast alive');
 
       cy.get(`[data-cy="publicado"]`).should('not.be.checked');
       cy.get(`[data-cy="publicado"]`).click();
       cy.get(`[data-cy="publicado"]`).should('be.checked');
 
-      cy.get(`[data-cy="publicadoEn"]`).type('2023-12-04T03:57');
+      cy.get(`[data-cy="publicadoEn"]`).type('2023-12-04T20:19');
       cy.get(`[data-cy="publicadoEn"]`).blur();
-      cy.get(`[data-cy="publicadoEn"]`).should('have.value', '2023-12-04T03:57');
+      cy.get(`[data-cy="publicadoEn"]`).should('have.value', '2023-12-04T20:19');
 
       cy.get(`[data-cy="incidente"]`).select(1);
 

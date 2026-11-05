@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20231204224423"
+    "changelogDate": "20231204224723"
   },
   "applications": ["oncall"],
   "documentation": "Analisis posterior al incidente. Sin culpables, con causas.",
@@ -20,16 +20,21 @@
     },
     {
       "fieldName": "causaRaiz",
-      "fieldType": "TextBlob",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "2000"
     },
     {
       "fieldName": "lineaDeTiempo",
-      "fieldType": "TextBlob"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "4000"
     },
     {
       "fieldName": "leccionesAprendidas",
-      "fieldType": "TextBlob"
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "2000"
     },
     {
       "fieldName": "publicado",

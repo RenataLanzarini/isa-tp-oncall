@@ -35,7 +35,7 @@ describe('AccionCorrectiva e2e test', () => {
     cy.authenticatedRequest({
       method: 'POST',
       url: '/api/postmortems',
-      body: {"titulo":"meanwhile rosy duh","resumen":"provided what","causaRaiz":"Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci50eHQ=","lineaDeTiempo":"Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci50eHQ=","leccionesAprendidas":"Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci50eHQ=","publicado":true,"publicadoEn":"2023-12-04T16:32:38.977Z"},
+      body: {"titulo":"meanwhile rosy duh","resumen":"provided what","causaRaiz":"psst","lineaDeTiempo":"citizen","leccionesAprendidas":"modulo mockingly failing","publicado":true,"publicadoEn":"2023-12-04T02:51:53.203Z"},
     }).then(({ body }) => {
       postmortem = body;
     });

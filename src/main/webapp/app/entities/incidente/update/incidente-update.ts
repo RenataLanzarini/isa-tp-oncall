@@ -7,8 +7,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslatePipe } from '@ngx-translate/core';
 import { Observable, finalize, map } from 'rxjs';
 
-import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
-import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
+import { EstadoIncidente } from 'app/entities/enumerations/estado-incidente.model';
+import { Severidad } from 'app/entities/enumerations/severidad.model';
 import { ServicioService } from 'app/entities/servicio/service/servicio.service';
 import { IServicio } from 'app/entities/servicio/servicio.model';
 import { UserService } from 'app/entities/user/service/user.service';
@@ -20,9 +20,6 @@ import { IIncidente } from '../incidente.model';
 import { IncidenteService } from '../service/incidente.service';
 
 import { IncidenteFormGroup, IncidenteFormService } from './incidente-form.service';
-import { AlertErrorModel } from 'app/shared/alert/alert-error.model';
-import { Severidad } from 'app/entities/enumerations/severidad.model';
-import { EstadoIncidente } from 'app/entities/enumerations/estado-incidente.model';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,8 +36,6 @@ export class IncidenteUpdate implements OnInit {
   usersSharedCollection = signal<IUser[]>([]);
   serviciosSharedCollection = signal<IServicio[]>([]);
 
-  protected dataUtils = inject(DataUtils);
-  protected eventManager = inject(EventManager);
   protected incidenteService = inject(IncidenteService);
   protected incidenteFormService = inject(IncidenteFormService);
   protected userService = inject(UserService);
@@ -62,21 +57,6 @@ export class IncidenteUpdate implements OnInit {
       }
 
       this.loadRelationshipsOptions();
-    });
-  }
-
-  byteSize(base64String: string): string {
-    return this.dataUtils.byteSize(base64String);
-  }
-
-  openFile(base64String: string, contentType: string | null | undefined): void {
-    this.dataUtils.openFile(base64String, contentType);
-  }
-
-  setFileData(event: Event, field: string, isImage: boolean): void {
-    this.dataUtils.loadFileToForm(event, this.editForm, field, isImage).subscribe({
-      error: (err: FileLoadError) =>
-        this.eventManager.broadcast(new EventWithContent<AlertErrorModel>('oncallApp.error', { ...err, key: `error.file.${err.key}` })),
     });
   }
 

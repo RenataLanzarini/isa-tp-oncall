@@ -50,6 +50,8 @@ public class AlertaCriteria implements Serializable, Criteria {
 
     private StringFilter resumen;
 
+    private StringFilter payload;
+
     private InstantFilter recibidaEn;
 
     private BooleanFilter procesada;
@@ -67,6 +69,7 @@ public class AlertaCriteria implements Serializable, Criteria {
         this.fingerprint = other.optionalFingerprint().map(StringFilter::copy).orElse(null);
         this.origen = other.optionalOrigen().map(OrigenAlertaFilter::copy).orElse(null);
         this.resumen = other.optionalResumen().map(StringFilter::copy).orElse(null);
+        this.payload = other.optionalPayload().map(StringFilter::copy).orElse(null);
         this.recibidaEn = other.optionalRecibidaEn().map(InstantFilter::copy).orElse(null);
         this.procesada = other.optionalProcesada().map(BooleanFilter::copy).orElse(null);
         this.servicioId = other.optionalServicioId().map(LongFilter::copy).orElse(null);
@@ -153,6 +156,25 @@ public class AlertaCriteria implements Serializable, Criteria {
 
     public void setResumen(StringFilter resumen) {
         this.resumen = resumen;
+    }
+
+    public StringFilter getPayload() {
+        return payload;
+    }
+
+    public Optional<StringFilter> optionalPayload() {
+        return Optional.ofNullable(payload);
+    }
+
+    public StringFilter payload() {
+        if (payload == null) {
+            setPayload(new StringFilter());
+        }
+        return payload;
+    }
+
+    public void setPayload(StringFilter payload) {
+        this.payload = payload;
     }
 
     public InstantFilter getRecibidaEn() {
@@ -264,6 +286,7 @@ public class AlertaCriteria implements Serializable, Criteria {
             Objects.equals(fingerprint, that.fingerprint) &&
             Objects.equals(origen, that.origen) &&
             Objects.equals(resumen, that.resumen) &&
+            Objects.equals(payload, that.payload) &&
             Objects.equals(recibidaEn, that.recibidaEn) &&
             Objects.equals(procesada, that.procesada) &&
             Objects.equals(servicioId, that.servicioId) &&
@@ -274,7 +297,7 @@ public class AlertaCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fingerprint, origen, resumen, recibidaEn, procesada, servicioId, incidenteId, distinct);
+        return Objects.hash(id, fingerprint, origen, resumen, payload, recibidaEn, procesada, servicioId, incidenteId, distinct);
     }
 
     // prettier-ignore
@@ -285,6 +308,7 @@ public class AlertaCriteria implements Serializable, Criteria {
             optionalFingerprint().map(f -> "fingerprint=" + f + ", ").orElse("") +
             optionalOrigen().map(f -> "origen=" + f + ", ").orElse("") +
             optionalResumen().map(f -> "resumen=" + f + ", ").orElse("") +
+            optionalPayload().map(f -> "payload=" + f + ", ").orElse("") +
             optionalRecibidaEn().map(f -> "recibidaEn=" + f + ", ").orElse("") +
             optionalProcesada().map(f -> "procesada=" + f + ", ").orElse("") +
             optionalServicioId().map(f -> "servicioId=" + f + ", ").orElse("") +

@@ -74,6 +74,11 @@ public class Servicio implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "servicio")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "servicio", "ventana" }, allowSetters = true)
+    private Set<ServicioEnVentana> servicioEnVentanas = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "servicio")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "servicio", "pasos" }, allowSetters = true)
     private Set<PoliticaEscalamiento> politicas = new HashSet<>();
 
@@ -247,6 +252,37 @@ public class Servicio implements Serializable {
     public Servicio removeAlerta(Alerta alerta) {
         this.alertas.remove(alerta);
         alerta.setServicio(null);
+        return this;
+    }
+
+    public Set<ServicioEnVentana> getServicioEnVentanas() {
+        return this.servicioEnVentanas;
+    }
+
+    public void setServicioEnVentanas(Set<ServicioEnVentana> servicioEnVentanas) {
+        if (this.servicioEnVentanas != null) {
+            this.servicioEnVentanas.forEach(i -> i.setServicio(null));
+        }
+        if (servicioEnVentanas != null) {
+            servicioEnVentanas.forEach(i -> i.setServicio(this));
+        }
+        this.servicioEnVentanas = servicioEnVentanas;
+    }
+
+    public Servicio servicioEnVentanas(Set<ServicioEnVentana> servicioEnVentanas) {
+        this.setServicioEnVentanas(servicioEnVentanas);
+        return this;
+    }
+
+    public Servicio addServicioEnVentana(ServicioEnVentana servicioEnVentana) {
+        this.servicioEnVentanas.add(servicioEnVentana);
+        servicioEnVentana.setServicio(this);
+        return this;
+    }
+
+    public Servicio removeServicioEnVentana(ServicioEnVentana servicioEnVentana) {
+        this.servicioEnVentanas.remove(servicioEnVentana);
+        servicioEnVentana.setServicio(null);
         return this;
     }
 

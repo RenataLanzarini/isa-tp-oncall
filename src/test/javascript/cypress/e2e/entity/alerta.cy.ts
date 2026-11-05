@@ -14,7 +14,7 @@ describe('Alerta e2e test', () => {
   const alertaPageUrl = '/alerta';
   let username: string;
   let password: string;
-  // const alertaSample = {"fingerprint":"deceivingly prohibition noisily","origen":"MANUAL","resumen":"overvalue coliseum slight","recibidaEn":"2023-12-04T00:54:48.576Z","procesada":false};
+  // const alertaSample = {"fingerprint":"skean tomography including","origen":"CLOUDWATCH","resumen":"qua","recibidaEn":"2023-12-04T02:47:04.854Z","procesada":true};
 
   let alerta;
   // let servicio;
@@ -238,12 +238,12 @@ describe('Alerta e2e test', () => {
       cy.get(`[data-cy="resumen"]`).type('tenderly');
       cy.get(`[data-cy="resumen"]`).should('have.value', 'tenderly');
 
-      cy.get(`[data-cy="payload"]`).type('../fake-data/blob/hipster.txt');
-      cy.get(`[data-cy="payload"]`).invoke('val').should('match', new RegExp('../fake-data/blob/hipster.txt'));
+      cy.get(`[data-cy="payload"]`).type('bitter');
+      cy.get(`[data-cy="payload"]`).should('have.value', 'bitter');
 
-      cy.get(`[data-cy="recibidaEn"]`).type('2023-12-04T03:26');
+      cy.get(`[data-cy="recibidaEn"]`).type('2023-12-04T04:23');
       cy.get(`[data-cy="recibidaEn"]`).blur();
-      cy.get(`[data-cy="recibidaEn"]`).should('have.value', '2023-12-04T03:26');
+      cy.get(`[data-cy="recibidaEn"]`).should('have.value', '2023-12-04T04:23');
 
       cy.get(`[data-cy="procesada"]`).should('not.be.checked');
       cy.get(`[data-cy="procesada"]`).click();

@@ -15,7 +15,7 @@ export const sampleWithPartialData: INotificacion = {
   canal: 'EMAIL',
   destino: 'as',
   estado: 'ENTREGADA',
-  enviadaEn: dayjs('2023-12-04T04:15'),
+  enviadaEn: dayjs('2023-12-04T04:18'),
   intentos: 0,
 };
 
@@ -24,7 +24,7 @@ export const sampleWithFullData: INotificacion = {
   canal: 'PUSH',
   destino: 'who anguished',
   estado: 'ENTREGADA',
-  enviadaEn: dayjs('2023-12-04T14:43'),
+  enviadaEn: dayjs('2023-12-04T14:46'),
   intentos: 7,
   errorMensaje: 'upbeat mmm outside',
 };

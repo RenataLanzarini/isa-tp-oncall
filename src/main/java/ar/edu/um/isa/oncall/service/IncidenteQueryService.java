@@ -82,6 +82,7 @@ public class IncidenteQueryService extends QueryService<Incidente> {
                     Boolean.TRUE.equals(criteria.getDistinct()) ? distinct(criteria.getDistinct()) : Specification.unrestricted(),
                     buildRangeSpecification(criteria.getId(), Incidente_.id),
                     buildStringSpecification(criteria.getTitulo(), Incidente_.titulo),
+                    buildStringSpecification(criteria.getDescripcion(), Incidente_.descripcion),
                     buildSpecification(criteria.getSeveridad(), Incidente_.severidad),
                     buildSpecification(criteria.getEstado(), Incidente_.estado),
                     buildRangeSpecification(criteria.getDetectadoEn(), Incidente_.detectadoEn),

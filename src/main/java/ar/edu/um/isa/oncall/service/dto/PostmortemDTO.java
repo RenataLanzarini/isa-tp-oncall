@@ -1,7 +1,6 @@
 package ar.edu.um.isa.oncall.service.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -24,13 +23,14 @@ public class PostmortemDTO implements Serializable {
     @Size(max = 500)
     private String resumen;
 
-    @Lob
+    @NotNull
+    @Size(max = 2000)
     private String causaRaiz;
 
-    @Lob
+    @Size(max = 4000)
     private String lineaDeTiempo;
 
-    @Lob
+    @Size(max = 2000)
     private String leccionesAprendidas;
 
     @NotNull

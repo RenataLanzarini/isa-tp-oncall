@@ -1,0 +1,37 @@
+{
+  "oncallApp": {
+    "ventanaDeMantenimiento": {
+      "home": {
+        "title": "Ventana De Mantenimientos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Ventana De Mantenimiento",
+        "createOrEditLabel": "Create or edit a Ventana De Mantenimiento",
+        "notFound": "No Ventana De Mantenimientos found"
+      },
+      "created": "A new Ventana De Mantenimiento is created with identifier {{ param }}",
+      "updated": "A Ventana De Mantenimiento is updated with identifier {{ param }}",
+      "deleted": "A Ventana De Mantenimiento is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Ventana De Mantenimiento {{ id }}?"
+      },
+      "detail": {
+        "title": "Ventana De Mantenimiento"
+      },
+      "id": "ID",
+      "nombre": "Nombre",
+      "descripcion": "Descripcion",
+      "tipo": "Tipo",
+      "zonaHoraria": "Zona Horaria",
+      "inicio": "Inicio",
+      "fin": "Fin",
+      "diaSemana": "Dia Semana",
+      "minutoInicio": "Minuto Inicio",
+      "minutoFin": "Minuto Fin",
+      "vigenteDesde": "Vigente Desde",
+      "vigenteHasta": "Vigente Hasta",
+      "activa": "Activa",
+      "servicioEnVentana": "Servicio En Ventana",
+      "excepcion": "Excepcion"
+    }
+  }
+}

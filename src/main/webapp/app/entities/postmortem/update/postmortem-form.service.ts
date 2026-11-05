@@ -67,10 +67,14 @@ export class PostmortemFormService {
         validators: [Validators.required, Validators.maxLength(500)],
       }),
       causaRaiz: new FormControl(postmortemRawValue.causaRaiz, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.maxLength(2000)],
       }),
-      lineaDeTiempo: new FormControl(postmortemRawValue.lineaDeTiempo),
-      leccionesAprendidas: new FormControl(postmortemRawValue.leccionesAprendidas),
+      lineaDeTiempo: new FormControl(postmortemRawValue.lineaDeTiempo, {
+        validators: [Validators.maxLength(4000)],
+      }),
+      leccionesAprendidas: new FormControl(postmortemRawValue.leccionesAprendidas, {
+        validators: [Validators.maxLength(2000)],
+      }),
       publicado: new FormControl(postmortemRawValue.publicado, {
         validators: [Validators.required],
       }),

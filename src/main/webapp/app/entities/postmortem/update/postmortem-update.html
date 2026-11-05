@@ -54,38 +54,65 @@
         @let causaRaizRef = editForm.get('causaRaiz')!;
         <div class="mb-3">
           <label class="form-label" for="field_causaRaiz" jhiTranslate="oncallApp.postmortem.causaRaiz">Causa Raiz</label>
-          <textarea class="form-control" name="causaRaiz" id="field_causaRaiz" data-cy="causaRaiz" formControlName="causaRaiz"></textarea>
+          <input type="text" class="form-control" name="causaRaiz" id="field_causaRaiz" data-cy="causaRaiz" formControlName="causaRaiz" />
           @if (causaRaizRef.invalid && (causaRaizRef.dirty || causaRaizRef.touched)) {
             <div>
               @if (causaRaizRef.errors?.required) {
                 <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
               }
+              @if (causaRaizRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >Este campo no puede superar más de 2000 caracteres.</small
+                >
+              }
             </div>
           }
         </div>
 
+        @let lineaDeTiempoRef = editForm.get('lineaDeTiempo')!;
         <div class="mb-3">
           <label class="form-label" for="field_lineaDeTiempo" jhiTranslate="oncallApp.postmortem.lineaDeTiempo">Linea De Tiempo</label>
-          <textarea
+          <input
+            type="text"
             class="form-control"
             name="lineaDeTiempo"
             id="field_lineaDeTiempo"
             data-cy="lineaDeTiempo"
             formControlName="lineaDeTiempo"
-          ></textarea>
+          />
+          @if (lineaDeTiempoRef.invalid && (lineaDeTiempoRef.dirty || lineaDeTiempoRef.touched)) {
+            <div>
+              @if (lineaDeTiempoRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '4000' }"
+                  >Este campo no puede superar más de 4000 caracteres.</small
+                >
+              }
+            </div>
+          }
         </div>
 
+        @let leccionesAprendidasRef = editForm.get('leccionesAprendidas')!;
         <div class="mb-3">
           <label class="form-label" for="field_leccionesAprendidas" jhiTranslate="oncallApp.postmortem.leccionesAprendidas"
             >Lecciones Aprendidas</label
           >
-          <textarea
+          <input
+            type="text"
             class="form-control"
             name="leccionesAprendidas"
             id="field_leccionesAprendidas"
             data-cy="leccionesAprendidas"
             formControlName="leccionesAprendidas"
-          ></textarea>
+          />
+          @if (leccionesAprendidasRef.invalid && (leccionesAprendidasRef.dirty || leccionesAprendidasRef.touched)) {
+            <div>
+              @if (leccionesAprendidasRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '2000' }"
+                  >Este campo no puede superar más de 2000 caracteres.</small
+                >
+              }
+            </div>
+          }
         </div>
 
         @let publicadoRef = editForm.get('publicado')!;

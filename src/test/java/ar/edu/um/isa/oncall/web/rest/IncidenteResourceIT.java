@@ -409,6 +409,59 @@ class IncidenteResourceIT {
 
     @Test
     @Transactional
+    void getAllIncidentesByDescripcionIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedIncidente = incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where descripcion equals to
+        defaultIncidenteFiltering("descripcion.equals=" + DEFAULT_DESCRIPCION, "descripcion.equals=" + UPDATED_DESCRIPCION);
+    }
+
+    @Test
+    @Transactional
+    void getAllIncidentesByDescripcionIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedIncidente = incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where descripcion in
+        defaultIncidenteFiltering(
+            "descripcion.in=" + DEFAULT_DESCRIPCION + "," + UPDATED_DESCRIPCION,
+            "descripcion.in=" + UPDATED_DESCRIPCION
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllIncidentesByDescripcionIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedIncidente = incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where descripcion is not null
+        defaultIncidenteFiltering("descripcion.specified=true", "descripcion.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllIncidentesByDescripcionContainsSomething() throws Exception {
+        // Initialize the database
+        insertedIncidente = incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where descripcion contains
+        defaultIncidenteFiltering("descripcion.contains=" + DEFAULT_DESCRIPCION, "descripcion.contains=" + UPDATED_DESCRIPCION);
+    }
+
+    @Test
+    @Transactional
+    void getAllIncidentesByDescripcionNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedIncidente = incidenteRepository.saveAndFlush(incidente);
+
+        // Get all the incidenteList where descripcion does not contain
+        defaultIncidenteFiltering("descripcion.doesNotContain=" + UPDATED_DESCRIPCION, "descripcion.doesNotContain=" + DEFAULT_DESCRIPCION);
+    }
+
+    @Test
+    @Transactional
     void getAllIncidentesBySeveridadIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedIncidente = incidenteRepository.saveAndFlush(incidente);

@@ -76,9 +76,19 @@
           }
         </div>
 
+        @let payloadRef = editForm.get('payload')!;
         <div class="mb-3">
           <label class="form-label" for="field_payload" jhiTranslate="oncallApp.alerta.payload">Payload</label>
-          <textarea class="form-control" name="payload" id="field_payload" data-cy="payload" formControlName="payload"></textarea>
+          <input type="text" class="form-control" name="payload" id="field_payload" data-cy="payload" formControlName="payload" />
+          @if (payloadRef.invalid && (payloadRef.dirty || payloadRef.touched)) {
+            <div>
+              @if (payloadRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '4000' }"
+                  >Este campo no puede superar más de 4000 caracteres.</small
+                >
+              }
+            </div>
+          }
         </div>
 
         @let recibidaEnRef = editForm.get('recibidaEn')!;

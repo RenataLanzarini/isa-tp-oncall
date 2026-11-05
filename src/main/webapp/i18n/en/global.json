@@ -19,6 +19,9 @@
         "turnoDeGuardia": "Turno De Guardia",
         "politicaEscalamiento": "Politica Escalamiento",
         "pasoEscalamiento": "Paso Escalamiento",
+        "ventanaDeMantenimiento": "Ventana De Mantenimiento",
+        "servicioEnVentana": "Servicio En Ventana",
+        "excepcionDeVentana": "Excepcion De Ventana",
         "notificacion": "Notificacion",
         "postmortem": "Postmortem",
         "accionCorrectiva": "Accion Correctiva"

@@ -14,7 +14,7 @@ describe('Incidente e2e test', () => {
   const incidentePageUrl = '/incidente';
   let username: string;
   let password: string;
-  const incidenteSample = { titulo: 'platypus kosher', severidad: 'SEV1', estado: 'MITIGADO', detectadoEn: '2023-12-04T10:32:35.982Z' };
+  const incidenteSample = { titulo: 'developmental', severidad: 'SEV2', estado: 'CERRADO', detectadoEn: '2023-12-04T03:25:48.097Z' };
 
   let incidente;
 
@@ -173,31 +173,31 @@ describe('Incidente e2e test', () => {
       cy.get(`[data-cy="titulo"]`).type('flustered');
       cy.get(`[data-cy="titulo"]`).should('have.value', 'flustered');
 
-      cy.get(`[data-cy="descripcion"]`).type('../fake-data/blob/hipster.txt');
-      cy.get(`[data-cy="descripcion"]`).invoke('val').should('match', new RegExp('../fake-data/blob/hipster.txt'));
+      cy.get(`[data-cy="descripcion"]`).type('forenenst afraid');
+      cy.get(`[data-cy="descripcion"]`).should('have.value', 'forenenst afraid');
 
       cy.get(`[data-cy="severidad"]`).select('SEV3');
 
       cy.get(`[data-cy="estado"]`).select('RESUELTO');
 
-      cy.get(`[data-cy="detectadoEn"]`).type('2023-12-04T02:56');
+      cy.get(`[data-cy="detectadoEn"]`).type('2023-12-04T12:33');
       cy.get(`[data-cy="detectadoEn"]`).blur();
-      cy.get(`[data-cy="detectadoEn"]`).should('have.value', '2023-12-04T02:56');
+      cy.get(`[data-cy="detectadoEn"]`).should('have.value', '2023-12-04T12:33');
 
-      cy.get(`[data-cy="reconocidoEn"]`).type('2023-12-04T09:24');
+      cy.get(`[data-cy="reconocidoEn"]`).type('2023-12-04T11:42');
       cy.get(`[data-cy="reconocidoEn"]`).blur();
-      cy.get(`[data-cy="reconocidoEn"]`).should('have.value', '2023-12-04T09:24');
+      cy.get(`[data-cy="reconocidoEn"]`).should('have.value', '2023-12-04T11:42');
 
-      cy.get(`[data-cy="mitigadoEn"]`).type('2023-12-04T14:04');
+      cy.get(`[data-cy="mitigadoEn"]`).type('2023-12-04T14:31');
       cy.get(`[data-cy="mitigadoEn"]`).blur();
-      cy.get(`[data-cy="mitigadoEn"]`).should('have.value', '2023-12-04T14:04');
+      cy.get(`[data-cy="mitigadoEn"]`).should('have.value', '2023-12-04T14:31');
 
-      cy.get(`[data-cy="resueltoEn"]`).type('2023-12-04T20:33');
+      cy.get(`[data-cy="resueltoEn"]`).type('2023-12-04T12:57');
       cy.get(`[data-cy="resueltoEn"]`).blur();
-      cy.get(`[data-cy="resueltoEn"]`).should('have.value', '2023-12-04T20:33');
+      cy.get(`[data-cy="resueltoEn"]`).should('have.value', '2023-12-04T12:57');
 
-      cy.get(`[data-cy="usuariosAfectados"]`).type('13362');
-      cy.get(`[data-cy="usuariosAfectados"]`).should('have.value', '13362');
+      cy.get(`[data-cy="usuariosAfectados"]`).type('32259');
+      cy.get(`[data-cy="usuariosAfectados"]`).should('have.value', '32259');
 
       cy.get(`[data-cy="cumplioObjetivo"]`).should('not.be.checked');
       cy.get(`[data-cy="cumplioObjetivo"]`).click();

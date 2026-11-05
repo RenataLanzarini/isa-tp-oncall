@@ -36,7 +36,7 @@ describe('Notificacion e2e test', () => {
     cy.authenticatedRequest({
       method: 'POST',
       url: '/api/incidentes',
-      body: {"titulo":"whoever","descripcion":"Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci50eHQ=","severidad":"SEV1","estado":"MITIGADO","detectadoEn":"2023-12-04T18:06:55.255Z","reconocidoEn":"2023-12-03T23:42:29.255Z","mitigadoEn":"2023-12-04T17:09:24.760Z","resueltoEn":"2023-12-04T00:36:01.655Z","usuariosAfectados":24513,"cumplioObjetivo":true},
+      body: {"titulo":"whoever","descripcion":"instead","severidad":"SEV3","estado":"RESUELTO","detectadoEn":"2023-12-03T23:09:16.966Z","reconocidoEn":"2023-12-04T05:06:30.568Z","mitigadoEn":"2023-12-04T22:04:34.989Z","resueltoEn":"2023-12-04T10:53:47.317Z","usuariosAfectados":17371,"cumplioObjetivo":true},
     }).then(({ body }) => {
       incidente = body;
     });
@@ -255,9 +255,9 @@ describe('Notificacion e2e test', () => {
 
       cy.get(`[data-cy="estado"]`).select('ENVIADA');
 
-      cy.get(`[data-cy="enviadaEn"]`).type('2023-12-04T19:18');
+      cy.get(`[data-cy="enviadaEn"]`).type('2023-12-04T19:21');
       cy.get(`[data-cy="enviadaEn"]`).blur();
-      cy.get(`[data-cy="enviadaEn"]`).should('have.value', '2023-12-04T19:18');
+      cy.get(`[data-cy="enviadaEn"]`).should('have.value', '2023-12-04T19:21');
 
       cy.get(`[data-cy="intentos"]`).type('7');
       cy.get(`[data-cy="intentos"]`).should('have.value', '7');

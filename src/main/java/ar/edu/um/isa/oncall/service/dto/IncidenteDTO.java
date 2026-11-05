@@ -3,7 +3,6 @@ package ar.edu.um.isa.oncall.service.dto;
 import ar.edu.um.isa.oncall.domain.enumeration.EstadoIncidente;
 import ar.edu.um.isa.oncall.domain.enumeration.Severidad;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -26,7 +25,7 @@ public class IncidenteDTO implements Serializable {
     @Size(max = 140)
     private String titulo;
 
-    @Lob
+    @Size(max = 2000)
     private String descripcion;
 
     @NotNull

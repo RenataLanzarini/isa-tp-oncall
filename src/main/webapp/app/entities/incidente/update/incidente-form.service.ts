@@ -73,7 +73,9 @@ export class IncidenteFormService {
       titulo: new FormControl(incidenteRawValue.titulo, {
         validators: [Validators.required, Validators.maxLength(140)],
       }),
-      descripcion: new FormControl(incidenteRawValue.descripcion),
+      descripcion: new FormControl(incidenteRawValue.descripcion, {
+        validators: [Validators.maxLength(2000)],
+      }),
       severidad: new FormControl(incidenteRawValue.severidad, {
         validators: [Validators.required],
       }),

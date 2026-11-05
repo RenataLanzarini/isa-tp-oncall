@@ -1,0 +1,93 @@
+{
+  "annotations": {
+    "changelogDate": "20231204224323"
+  },
+  "applications": ["oncall"],
+  "documentation": "Periodo programado durante el cual un servicio esta en mantenimiento.\\n\\nPara una ventana UNICA se usan inicio y fin. Para una ventana SEMANAL\\nse usan diaSemana, minutoInicio y minutoFin en la zonaHoraria indicada.\\nSi minutoFin es menor o igual que minutoInicio, el intervalo termina\\nal dia siguiente.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "80"
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "500"
+    },
+    {
+      "fieldName": "tipo",
+      "fieldType": "TipoVentana",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "UNICA,SEMANAL"
+    },
+    {
+      "fieldName": "zonaHoraria",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "50"
+    },
+    {
+      "fieldName": "inicio",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "fin",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "diaSemana",
+      "fieldType": "DiaSemana",
+      "fieldValues": "LUNES,MARTES,MIERCOLES,JUEVES,VIERNES,SABADO,DOMINGO"
+    },
+    {
+      "fieldName": "minutoInicio",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "1439",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "minutoFin",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "1439",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "vigenteDesde",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "vigenteHasta",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "activa",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "VentanaDeMantenimiento",
+  "relationships": [
+    {
+      "otherEntityName": "servicioEnVentana",
+      "otherEntityRelationshipName": "ventana",
+      "relationshipName": "servicioEnVentana",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "excepcionDeVentana",
+      "otherEntityRelationshipName": "ventana",
+      "relationshipName": "excepcion",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

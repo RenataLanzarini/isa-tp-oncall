@@ -12,7 +12,6 @@ import { Subscription, combineLatest, filter, tap } from 'rxjs';
 
 import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
 import { ITEMS_PER_PAGE, PAGE_HEADER, TOTAL_COUNT_RESPONSE_HEADER } from 'app/config/pagination.constants';
-import { DataUtils } from 'app/core/util/data-util.service';
 import { Alert } from 'app/shared/alert/alert';
 import { AlertError } from 'app/shared/alert/alert-error';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
@@ -62,7 +61,6 @@ export class Alerta implements OnInit {
   protected readonly activatedRoute = inject(ActivatedRoute);
   protected readonly sortService = inject(SortService);
   protected readonly filterOptions = toSignal(this.filters.filterChanges);
-  protected dataUtils = inject(DataUtils);
   protected modalService = inject(NgbModal);
 
   constructor() {
@@ -96,14 +94,6 @@ export class Alerta implements OnInit {
         tap(() => this.load()),
       )
       .subscribe();
-  }
-
-  byteSize(base64String: string): string {
-    return this.dataUtils.byteSize(base64String);
-  }
-
-  openFile(base64String: string, contentType: string | null | undefined): void {
-    return this.dataUtils.openFile(base64String, contentType);
   }
 
   delete(alerta: IAlerta): void {

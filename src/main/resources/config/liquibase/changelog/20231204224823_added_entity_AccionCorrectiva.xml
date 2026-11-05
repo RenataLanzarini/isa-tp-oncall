@@ -9,7 +9,7 @@
     <!--
         Added the entity AccionCorrectiva.
     -->
-    <changeSet id="20231204224523-1" author="jhipster">
+    <changeSet id="20231204224823-1" author="jhipster">
         <createTable tableName="accion_correctiva" remarks="Compromiso concreto que sale del postmortem.">
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
@@ -49,7 +49,7 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20231204224523-1-data" author="jhipster" context="faker">
+    <changeSet id="20231204224823-1-data" author="jhipster" context="faker">
         <loadData
                   file="../fake-data/accion_correctiva.csv"
                   relativeToChangelogFile="true"

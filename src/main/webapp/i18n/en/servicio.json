@@ -27,6 +27,7 @@
       "equipo": "Equipo",
       "objetivo": "Objetivo",
       "alerta": "Alerta",
+      "servicioEnVentana": "Servicio En Ventana",
       "politica": "Politica",
       "incidente": "Incidente"
     }

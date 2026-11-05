@@ -73,6 +73,7 @@ class IncidenteCriteriaTest {
     private static void setAllFilters(IncidenteCriteria incidenteCriteria) {
         incidenteCriteria.id();
         incidenteCriteria.titulo();
+        incidenteCriteria.descripcion();
         incidenteCriteria.severidad();
         incidenteCriteria.estado();
         incidenteCriteria.detectadoEn();
@@ -95,6 +96,7 @@ class IncidenteCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getTitulo()) &&
+                condition.apply(criteria.getDescripcion()) &&
                 condition.apply(criteria.getSeveridad()) &&
                 condition.apply(criteria.getEstado()) &&
                 condition.apply(criteria.getDetectadoEn()) &&
@@ -119,6 +121,7 @@ class IncidenteCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getTitulo(), copy.getTitulo()) &&
+                condition.apply(criteria.getDescripcion(), copy.getDescripcion()) &&
                 condition.apply(criteria.getSeveridad(), copy.getSeveridad()) &&
                 condition.apply(criteria.getEstado(), copy.getEstado()) &&
                 condition.apply(criteria.getDetectadoEn(), copy.getDetectadoEn()) &&

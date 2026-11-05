@@ -16,8 +16,8 @@ export const sampleWithPartialData: IAlerta = {
   fingerprint: 'meh drive',
   origen: 'CLOUDWATCH',
   resumen: 'inasmuch shrilly',
-  payload: '../fake-data/blob/hipster.txt',
-  recibidaEn: dayjs('2023-12-04T11:00'),
+  payload: 'crystallize progress',
+  recibidaEn: dayjs('2023-12-04T18:58'),
   procesada: false,
 };
 
@@ -26,8 +26,8 @@ export const sampleWithFullData: IAlerta = {
   fingerprint: 'interviewer minus patiently',
   origen: 'PROMETHEUS',
   resumen: 'oh wicked',
-  payload: '../fake-data/blob/hipster.txt',
-  recibidaEn: dayjs('2023-12-04T09:54'),
+  payload: 'galvanize whether',
+  recibidaEn: dayjs('2023-12-04T17:16'),
   procesada: true,
 };
 

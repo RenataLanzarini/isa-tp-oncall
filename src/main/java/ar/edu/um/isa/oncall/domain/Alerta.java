@@ -45,8 +45,8 @@ public class Alerta implements Serializable {
     @Column(name = "resumen", length = 200, nullable = false)
     private String resumen;
 
-    @Lob
-    @Column(name = "payload")
+    @Size(max = 4000)
+    @Column(name = "payload", length = 4000)
     private String payload;
 
     @NotNull
@@ -59,7 +59,10 @@ public class Alerta implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "equipo", "objetivos", "alertas", "politicas", "incidentes" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "equipo", "objetivos", "alertas", "servicioEnVentanas", "politicas", "incidentes" },
+        allowSetters = true
+    )
     private Servicio servicio;
 
     @ManyToOne(fetch = FetchType.LAZY)

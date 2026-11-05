@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20231204224323"
+    "changelogDate": "20231204224623"
   },
   "applications": ["oncall"],
   "documentation": "Intento de avisarle a una persona por un canal.",

@@ -75,6 +75,7 @@ class AlertaCriteriaTest {
         alertaCriteria.fingerprint();
         alertaCriteria.origen();
         alertaCriteria.resumen();
+        alertaCriteria.payload();
         alertaCriteria.recibidaEn();
         alertaCriteria.procesada();
         alertaCriteria.servicioId();
@@ -89,6 +90,7 @@ class AlertaCriteriaTest {
                 condition.apply(criteria.getFingerprint()) &&
                 condition.apply(criteria.getOrigen()) &&
                 condition.apply(criteria.getResumen()) &&
+                condition.apply(criteria.getPayload()) &&
                 condition.apply(criteria.getRecibidaEn()) &&
                 condition.apply(criteria.getProcesada()) &&
                 condition.apply(criteria.getServicioId()) &&
@@ -105,6 +107,7 @@ class AlertaCriteriaTest {
                 condition.apply(criteria.getFingerprint(), copy.getFingerprint()) &&
                 condition.apply(criteria.getOrigen(), copy.getOrigen()) &&
                 condition.apply(criteria.getResumen(), copy.getResumen()) &&
+                condition.apply(criteria.getPayload(), copy.getPayload()) &&
                 condition.apply(criteria.getRecibidaEn(), copy.getRecibidaEn()) &&
                 condition.apply(criteria.getProcesada(), copy.getProcesada()) &&
                 condition.apply(criteria.getServicioId(), copy.getServicioId()) &&

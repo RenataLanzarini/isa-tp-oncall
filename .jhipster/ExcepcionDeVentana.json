@@ -1,0 +1,46 @@
+{
+  "annotations": {
+    "changelogDate": "20231204224523"
+  },
+  "applications": ["oncall"],
+  "documentation": "Excepcion concreta de una ventana. Una cancelacion elimina una\\nocurrencia; una inclusion agrega una ocurrencia extraordinaria.",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "tipo",
+      "fieldType": "TipoExcepcionVentana",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "INCLUSION,CANCELACION"
+    },
+    {
+      "fieldName": "desde",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "hasta",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "motivo",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "255"
+    }
+  ],
+  "name": "ExcepcionDeVentana",
+  "relationships": [
+    {
+      "otherEntityField": "nombre",
+      "otherEntityName": "ventanaDeMantenimiento",
+      "otherEntityRelationshipName": "excepcion",
+      "relationshipName": "ventana",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

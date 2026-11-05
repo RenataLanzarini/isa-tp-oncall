@@ -1,0 +1,151 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-excepcion-de-ventana-heading"
+        data-cy="ExcepcionDeVentanaCreateUpdateHeading"
+        jhiTranslate="oncallApp.excepcionDeVentana.home.createOrEditLabel"
+      >
+        Crear o editar Excepcion De Ventana
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="global.field.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let tipoRef = editForm.get('tipo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_tipo" jhiTranslate="oncallApp.excepcionDeVentana.tipo">Tipo</label>
+          <select class="form-control" name="tipo" formControlName="tipo" id="field_tipo" data-cy="tipo">
+            <option [ngValue]="null">{{ 'oncallApp.TipoExcepcionVentana.null' | translate }}</option>
+            @for (tipoExcepcionVentana of tipoExcepcionVentanaValues; track $index) {
+              <option [value]="tipoExcepcionVentana">{{ 'oncallApp.TipoExcepcionVentana.' + tipoExcepcionVentana | translate }}</option>
+            }
+          </select>
+          @if (tipoRef.invalid && (tipoRef.dirty || tipoRef.touched)) {
+            <div>
+              @if (tipoRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let desdeRef = editForm.get('desde')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_desde" jhiTranslate="oncallApp.excepcionDeVentana.desde">Desde</label>
+          <div class="d-flex">
+            <input
+              id="field_desde"
+              data-cy="desde"
+              type="datetime-local"
+              class="form-control"
+              name="desde"
+              formControlName="desde"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (desdeRef.invalid && (desdeRef.dirty || desdeRef.touched)) {
+            <div>
+              @if (desdeRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!desdeRef.errors?.datetimelocal" jhiTranslate="entity.validation.datetimelocal"
+                >Este campo debe ser una fecha y hora.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let hastaRef = editForm.get('hasta')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_hasta" jhiTranslate="oncallApp.excepcionDeVentana.hasta">Hasta</label>
+          <div class="d-flex">
+            <input
+              id="field_hasta"
+              data-cy="hasta"
+              type="datetime-local"
+              class="form-control"
+              name="hasta"
+              formControlName="hasta"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (hastaRef.invalid && (hastaRef.dirty || hastaRef.touched)) {
+            <div>
+              @if (hastaRef.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!hastaRef.errors?.datetimelocal" jhiTranslate="entity.validation.datetimelocal"
+                >Este campo debe ser una fecha y hora.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let motivoRef = editForm.get('motivo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_motivo" jhiTranslate="oncallApp.excepcionDeVentana.motivo">Motivo</label>
+          <input type="text" class="form-control" name="motivo" id="field_motivo" data-cy="motivo" formControlName="motivo" />
+          @if (motivoRef.invalid && (motivoRef.dirty || motivoRef.touched)) {
+            <div>
+              @if (motivoRef.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >Este campo no puede superar más de 255 caracteres.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_ventana" jhiTranslate="oncallApp.excepcionDeVentana.ventana">Ventana</label>
+          <select
+            class="form-control"
+            id="field_ventana"
+            data-cy="ventana"
+            name="ventana"
+            formControlName="ventana"
+            [compareWith]="compareVentanaDeMantenimiento"
+          >
+            @if (editForm.get(['ventana'])!.value === null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (ventanaDeMantenimientoOption of ventanaDeMantenimientosSharedCollection(); track $index) {
+              <option [ngValue]="ventanaDeMantenimientoOption">{{ ventanaDeMantenimientoOption.nombre }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['ventana'])!.invalid && (editForm.get(['ventana'])!.dirty || editForm.get(['ventana'])!.touched)) {
+          <div>
+            @if (editForm.get(['ventana'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span jhiTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span jhiTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

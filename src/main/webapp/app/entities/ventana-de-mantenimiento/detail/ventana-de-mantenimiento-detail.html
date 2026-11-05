@@ -1,0 +1,93 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (ventanaDeMantenimiento(); as ventanaDeMantenimientoRef) {
+      <div>
+        <h2 data-cy="ventanaDeMantenimientoDetailsHeading">
+          <span jhiTranslate="oncallApp.ventanaDeMantenimiento.detail.title">Ventana De Mantenimiento</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.nombre">Nombre</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.nombre }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.descripcion">Descripcion</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.descripcion }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.tipo">Tipo</span></dt>
+          <dd>
+            <span [jhiTranslate]="'oncallApp.TipoVentana.' + (ventanaDeMantenimientoRef.tipo ?? 'null')">{{
+              { null: '', UNICA: 'UNICA', SEMANAL: 'SEMANAL' }[ventanaDeMantenimientoRef.tipo ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.zonaHoraria">Zona Horaria</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.zonaHoraria }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.inicio">Inicio</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.inicio | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.fin">Fin</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.fin | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.diaSemana">Dia Semana</span></dt>
+          <dd>
+            <span [jhiTranslate]="'oncallApp.DiaSemana.' + (ventanaDeMantenimientoRef.diaSemana ?? 'null')">{{
+              {
+                null: '',
+                LUNES: 'LUNES',
+                MARTES: 'MARTES',
+                MIERCOLES: 'MIERCOLES',
+                JUEVES: 'JUEVES',
+                VIERNES: 'VIERNES',
+                SABADO: 'SABADO',
+                DOMINGO: 'DOMINGO',
+              }[ventanaDeMantenimientoRef.diaSemana ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.minutoInicio">Minuto Inicio</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.minutoInicio }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.minutoFin">Minuto Fin</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.minutoFin }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.vigenteDesde">Vigente Desde</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.vigenteDesde | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.vigenteHasta">Vigente Hasta</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.vigenteHasta | formatMediumDate }}</span>
+          </dd>
+          <dt><span jhiTranslate="oncallApp.ventanaDeMantenimiento.activa">Activa</span></dt>
+          <dd>
+            <span>{{ ventanaDeMantenimientoRef.activa }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span jhiTranslate="entity.action.back">Volver</span>
+        </button>
+
+        <button type="button" [routerLink]="['/ventana-de-mantenimiento', ventanaDeMantenimientoRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span jhiTranslate="entity.action.edit">Editar</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

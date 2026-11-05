@@ -64,6 +64,8 @@ public class IncidenteCriteria implements Serializable, Criteria {
 
     private StringFilter titulo;
 
+    private StringFilter descripcion;
+
     private SeveridadFilter severidad;
 
     private EstadoIncidenteFilter estado;
@@ -99,6 +101,7 @@ public class IncidenteCriteria implements Serializable, Criteria {
     public IncidenteCriteria(IncidenteCriteria other) {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.titulo = other.optionalTitulo().map(StringFilter::copy).orElse(null);
+        this.descripcion = other.optionalDescripcion().map(StringFilter::copy).orElse(null);
         this.severidad = other.optionalSeveridad().map(SeveridadFilter::copy).orElse(null);
         this.estado = other.optionalEstado().map(EstadoIncidenteFilter::copy).orElse(null);
         this.detectadoEn = other.optionalDetectadoEn().map(InstantFilter::copy).orElse(null);
@@ -157,6 +160,25 @@ public class IncidenteCriteria implements Serializable, Criteria {
 
     public void setTitulo(StringFilter titulo) {
         this.titulo = titulo;
+    }
+
+    public StringFilter getDescripcion() {
+        return descripcion;
+    }
+
+    public Optional<StringFilter> optionalDescripcion() {
+        return Optional.ofNullable(descripcion);
+    }
+
+    public StringFilter descripcion() {
+        if (descripcion == null) {
+            setDescripcion(new StringFilter());
+        }
+        return descripcion;
+    }
+
+    public void setDescripcion(StringFilter descripcion) {
+        this.descripcion = descripcion;
     }
 
     public SeveridadFilter getSeveridad() {
@@ -456,6 +478,7 @@ public class IncidenteCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(titulo, that.titulo) &&
+            Objects.equals(descripcion, that.descripcion) &&
             Objects.equals(severidad, that.severidad) &&
             Objects.equals(estado, that.estado) &&
             Objects.equals(detectadoEn, that.detectadoEn) &&
@@ -479,6 +502,7 @@ public class IncidenteCriteria implements Serializable, Criteria {
         return Objects.hash(
             id,
             titulo,
+            descripcion,
             severidad,
             estado,
             detectadoEn,
@@ -503,6 +527,7 @@ public class IncidenteCriteria implements Serializable, Criteria {
         return "IncidenteCriteria{" +
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalTitulo().map(f -> "titulo=" + f + ", ").orElse("") +
+            optionalDescripcion().map(f -> "descripcion=" + f + ", ").orElse("") +
             optionalSeveridad().map(f -> "severidad=" + f + ", ").orElse("") +
             optionalEstado().map(f -> "estado=" + f + ", ").orElse("") +
             optionalDetectadoEn().map(f -> "detectadoEn=" + f + ", ").orElse("") +

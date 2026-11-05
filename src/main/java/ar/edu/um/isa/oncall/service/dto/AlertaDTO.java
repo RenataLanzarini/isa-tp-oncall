@@ -2,7 +2,6 @@ package ar.edu.um.isa.oncall.service.dto;
 
 import ar.edu.um.isa.oncall.domain.enumeration.OrigenAlerta;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -30,7 +29,7 @@ public class AlertaDTO implements Serializable {
     @Size(max = 200)
     private String resumen;
 
-    @Lob
+    @Size(max = 4000)
     private String payload;
 
     @NotNull

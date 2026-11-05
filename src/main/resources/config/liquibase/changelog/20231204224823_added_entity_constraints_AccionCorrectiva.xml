@@ -8,7 +8,7 @@
     <!--
         Added the constraints for entity AccionCorrectiva.
     -->
-    <changeSet id="20231204224523-2" author="jhipster">
+    <changeSet id="20231204224823-2" author="jhipster">
 
         <addForeignKeyConstraint baseColumnNames="postmortem_id"
                                  baseTableName="accion_correctiva"

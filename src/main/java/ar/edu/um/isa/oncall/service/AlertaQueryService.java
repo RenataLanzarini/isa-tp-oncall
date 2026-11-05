@@ -85,6 +85,7 @@ public class AlertaQueryService extends QueryService<Alerta> {
                     buildStringSpecification(criteria.getFingerprint(), Alerta_.fingerprint),
                     buildSpecification(criteria.getOrigen(), Alerta_.origen),
                     buildStringSpecification(criteria.getResumen(), Alerta_.resumen),
+                    buildStringSpecification(criteria.getPayload(), Alerta_.payload),
                     buildRangeSpecification(criteria.getRecibidaEn(), Alerta_.recibidaEn),
                     buildSpecification(criteria.getProcesada(), Alerta_.procesada),
                     buildSpecification(criteria.getServicioId(), root -> root.join(Alerta_.servicio, JoinType.LEFT).get(Servicio_.id)),

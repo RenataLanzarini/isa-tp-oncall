@@ -24,15 +24,15 @@ export const sampleWithPartialData: IIncidente = {
 export const sampleWithFullData: IIncidente = {
   id: 14089,
   titulo: 'embossing gosh pace',
-  descripcion: '../fake-data/blob/hipster.txt',
-  severidad: 'SEV1',
-  estado: 'MITIGADO',
-  detectadoEn: dayjs('2023-12-04T08:37'),
-  reconocidoEn: dayjs('2023-12-04T14:11'),
-  mitigadoEn: dayjs('2023-12-04T11:09'),
-  resueltoEn: dayjs('2023-12-04T08:08'),
-  usuariosAfectados: 9184,
-  cumplioObjetivo: true,
+  descripcion: 'eyeliner',
+  severidad: 'SEV4',
+  estado: 'ABIERTO',
+  detectadoEn: dayjs('2023-12-04T22:15'),
+  reconocidoEn: dayjs('2023-12-04T12:09'),
+  mitigadoEn: dayjs('2023-12-04T15:17'),
+  resueltoEn: dayjs('2023-12-04T06:38'),
+  usuariosAfectados: 32687,
+  cumplioObjetivo: false,
 };
 
 export const sampleWithNewData: NewIncidente = {

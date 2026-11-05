@@ -17,7 +17,7 @@
             <column name="titulo" type="varchar(140)">
                 <constraints nullable="false" />
             </column>
-            <column name="descripcion" type="${clobType}">
+            <column name="descripcion" type="varchar(2000)">
                 <constraints nullable="true" />
             </column>
             <column name="severidad" type="varchar(255)">
@@ -88,7 +88,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="titulo" type="string"/>
-            <column name="descripcion" type="clob"/>
+            <column name="descripcion" type="string"/>
             <column name="severidad" type="string"/>
             <column name="estado" type="string"/>
             <column name="detectado_en" type="date"/>

@@ -37,8 +37,8 @@ public class Incidente implements Serializable {
     @Column(name = "titulo", length = 140, nullable = false)
     private String titulo;
 
-    @Lob
-    @Column(name = "descripcion")
+    @Size(max = 2000)
+    @Column(name = "descripcion", length = 2000)
     private String descripcion;
 
     @NotNull
@@ -81,7 +81,10 @@ public class Incidente implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "servicio_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "equipo", "objetivos", "alertas", "politicas", "incidentes" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "equipo", "objetivos", "alertas", "servicioEnVentanas", "politicas", "incidentes" },
+        allowSetters = true
+    )
     private Set<Servicio> servicios = new HashSet<>();
 
     @JsonIgnoreProperties(value = { "incidente", "accions" }, allowSetters = true)

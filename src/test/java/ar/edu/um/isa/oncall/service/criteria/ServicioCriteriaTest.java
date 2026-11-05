@@ -81,6 +81,7 @@ class ServicioCriteriaTest {
         servicioCriteria.equipoId();
         servicioCriteria.objetivoId();
         servicioCriteria.alertaId();
+        servicioCriteria.servicioEnVentanaId();
         servicioCriteria.politicaId();
         servicioCriteria.incidenteId();
         servicioCriteria.distinct();
@@ -99,6 +100,7 @@ class ServicioCriteriaTest {
                 condition.apply(criteria.getEquipoId()) &&
                 condition.apply(criteria.getObjetivoId()) &&
                 condition.apply(criteria.getAlertaId()) &&
+                condition.apply(criteria.getServicioEnVentanaId()) &&
                 condition.apply(criteria.getPoliticaId()) &&
                 condition.apply(criteria.getIncidenteId()) &&
                 condition.apply(criteria.getDistinct()),
@@ -119,6 +121,7 @@ class ServicioCriteriaTest {
                 condition.apply(criteria.getEquipoId(), copy.getEquipoId()) &&
                 condition.apply(criteria.getObjetivoId(), copy.getObjetivoId()) &&
                 condition.apply(criteria.getAlertaId(), copy.getAlertaId()) &&
+                condition.apply(criteria.getServicioEnVentanaId(), copy.getServicioEnVentanaId()) &&
                 condition.apply(criteria.getPoliticaId(), copy.getPoliticaId()) &&
                 condition.apply(criteria.getIncidenteId(), copy.getIncidenteId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
