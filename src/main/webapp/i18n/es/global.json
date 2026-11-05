@@ -155,6 +155,14 @@
     "idnull": "ID inválido",
     "idinvalid": "ID inválido",
     "idnotfound": "ID no encontrado",
+    "invalidTimeZone": "La zona horaria no es válida. Usá un identificador IANA, por ejemplo America/Argentina/Mendoza.",
+    "missingOneTimeFields": "Una ventana única requiere inicio y fin.",
+    "invalidInterval": "El fin debe ser posterior al inicio.",
+    "unexpectedWeeklyFields": "Una ventana única no admite campos de recurrencia semanal.",
+    "missingWeeklyFields": "Una ventana semanal requiere día, minutos de inicio y fin, y vigencia desde.",
+    "unexpectedOneTimeFields": "Una ventana semanal no admite inicio y fin absolutos.",
+    "invalidValidity": "La vigencia hasta no puede ser anterior a la vigencia desde.",
+    "duplicateAssociation": "El servicio ya está asociado a esta ventana de mantenimiento.",
     "file": {
       "could.not.extract": "No se pudo extraer el fichero",
       "not.image": "Se esperaba que el fichero fuera una imagen pero se encontro \"{{ fileType }}\""

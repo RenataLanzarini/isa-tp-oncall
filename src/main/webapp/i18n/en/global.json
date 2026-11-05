@@ -155,6 +155,14 @@
     "idnull": "Invalid ID",
     "idinvalid": "Invalid ID",
     "idnotfound": "ID cannot be found",
+    "invalidTimeZone": "The time zone is invalid. Use an IANA identifier such as America/Argentina/Mendoza.",
+    "missingOneTimeFields": "A one-time window requires a start and an end.",
+    "invalidInterval": "The end must be after the start.",
+    "unexpectedWeeklyFields": "A one-time window cannot contain weekly recurrence fields.",
+    "missingWeeklyFields": "A weekly window requires a day, start and end minutes, and a valid-from date.",
+    "unexpectedOneTimeFields": "A weekly window cannot contain absolute start and end instants.",
+    "invalidValidity": "The valid-until date cannot be before the valid-from date.",
+    "duplicateAssociation": "The service is already associated with this maintenance window.",
     "file": {
       "could.not.extract": "Could not extract file",
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""

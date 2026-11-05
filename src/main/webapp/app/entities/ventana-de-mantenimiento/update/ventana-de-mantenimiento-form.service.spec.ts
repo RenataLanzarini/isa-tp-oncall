@@ -1,6 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 
+import dayjs from 'dayjs/esm';
+
+import { TipoVentana } from 'app/entities/enumerations/tipo-ventana.model';
 import { sampleWithNewData, sampleWithRequiredData } from '../ventana-de-mantenimiento.test-samples';
 
 import { VentanaDeMantenimientoFormService } from './ventana-de-mantenimiento-form.service';
@@ -73,7 +76,19 @@ describe('VentanaDeMantenimiento Form Service', () => {
 
         const ventanaDeMantenimiento = service.getVentanaDeMantenimiento(formGroup);
 
-        expect(ventanaDeMantenimiento).toMatchObject({});
+        expect(ventanaDeMantenimiento).toMatchObject({
+          id: null,
+          tipo: TipoVentana.UNICA,
+          zonaHoraria: 'America/Argentina/Mendoza',
+          activa: false,
+        });
+        const { inicio, fin } = ventanaDeMantenimiento;
+        expect(inicio).toBeDefined();
+        expect(fin).toBeDefined();
+        if (!inicio || !fin) {
+          throw new Error('The default one-time interval is missing');
+        }
+        expect(fin.isAfter(inicio)).toBe(true);
       });
 
       it('should return IVentanaDeMantenimiento', () => {
@@ -102,6 +117,90 @@ describe('VentanaDeMantenimiento Form Service', () => {
         service.resetForm(formGroup, { id: null });
 
         expect(formGroup.controls.id.disabled).toBe(true);
+      });
+    });
+
+    describe('type-specific behavior', () => {
+      it('should build a valid one-time payload and clear weekly fields', () => {
+        const formGroup = service.createVentanaDeMantenimientoFormGroup();
+        formGroup.patchValue({
+          nombre: 'Ventana única',
+          diaSemana: 'LUNES',
+          minutoInicio: 60,
+          minutoFin: 120,
+          vigenteDesde: dayjs('2026-11-06'),
+        });
+
+        service.updateFormForType(formGroup, TipoVentana.UNICA, true);
+        const payload = service.getVentanaDeMantenimiento(formGroup);
+
+        expect(formGroup.valid).toBe(true);
+        expect(payload).toMatchObject({
+          tipo: TipoVentana.UNICA,
+          zonaHoraria: 'America/Argentina/Mendoza',
+          diaSemana: null,
+          minutoInicio: null,
+          minutoFin: null,
+          vigenteDesde: null,
+          vigenteHasta: null,
+        });
+        const { inicio, fin } = payload;
+        expect(inicio).toBeDefined();
+        expect(fin).toBeDefined();
+        if (!inicio || !fin) {
+          throw new Error('The one-time payload interval is missing');
+        }
+        expect(fin.isAfter(inicio)).toBe(true);
+      });
+
+      it('should require weekly fields and clear absolute instants', () => {
+        const formGroup = service.createVentanaDeMantenimientoFormGroup();
+        formGroup.controls.tipo.setValue(TipoVentana.SEMANAL);
+        service.updateFormForType(formGroup, TipoVentana.SEMANAL, true);
+
+        expect(formGroup.controls.inicio.value).toBeNull();
+        expect(formGroup.controls.fin.value).toBeNull();
+        expect(formGroup.controls.diaSemana.hasError('required')).toBe(true);
+        expect(formGroup.controls.minutoInicio.hasError('required')).toBe(true);
+        expect(formGroup.controls.minutoFin.hasError('required')).toBe(true);
+        expect(formGroup.controls.vigenteDesde.hasError('required')).toBe(true);
+
+        formGroup.patchValue({
+          nombre: 'Ventana semanal',
+          diaSemana: 'MARTES',
+          minutoInicio: 120,
+          minutoFin: 240,
+          vigenteDesde: dayjs('2026-11-06'),
+        });
+        const payload = service.getVentanaDeMantenimiento(formGroup);
+
+        expect(formGroup.valid).toBe(true);
+        expect(payload.inicio).toBeNull();
+        expect(payload.fin).toBeNull();
+      });
+
+      it('should reject invalid time zones and incoherent intervals', () => {
+        const formGroup = service.createVentanaDeMantenimientoFormGroup();
+        formGroup.patchValue({ zonaHoraria: 'desk', fin: formGroup.controls.inicio.value });
+
+        expect(formGroup.controls.zonaHoraria.hasError('invalidTimeZone')).toBe(true);
+        expect(formGroup.hasError('invalidInterval')).toBe(true);
+      });
+
+      it('should reject an inverted weekly validity range', () => {
+        const formGroup = service.createVentanaDeMantenimientoFormGroup();
+        formGroup.controls.tipo.setValue(TipoVentana.SEMANAL);
+        service.updateFormForType(formGroup, TipoVentana.SEMANAL, true);
+        formGroup.patchValue({
+          nombre: 'Ventana semanal',
+          diaSemana: 'MARTES',
+          minutoInicio: 120,
+          minutoFin: 240,
+          vigenteDesde: dayjs('2026-11-07'),
+          vigenteHasta: dayjs('2026-11-06'),
+        });
+
+        expect(formGroup.hasError('invalidValidity')).toBe(true);
       });
     });
   });

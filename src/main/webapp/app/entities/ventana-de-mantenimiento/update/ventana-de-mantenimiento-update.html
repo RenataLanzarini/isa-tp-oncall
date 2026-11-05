@@ -98,142 +98,187 @@
                   >Este campo no puede superar más de 50 caracteres.</small
                 >
               }
+              @if (zonaHorariaRef.errors?.invalidTimeZone) {
+                <small class="form-text text-danger" jhiTranslate="error.invalidTimeZone">La zona horaria no es válida.</small>
+              }
             </div>
           }
         </div>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_inicio" jhiTranslate="oncallApp.ventanaDeMantenimiento.inicio">Inicio</label>
-          <div class="d-flex">
-            <input
-              id="field_inicio"
-              data-cy="inicio"
-              type="datetime-local"
-              class="form-control"
-              name="inicio"
-              formControlName="inicio"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_fin" jhiTranslate="oncallApp.ventanaDeMantenimiento.fin">Fin</label>
-          <div class="d-flex">
-            <input
-              id="field_fin"
-              data-cy="fin"
-              type="datetime-local"
-              class="form-control"
-              name="fin"
-              formControlName="fin"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_diaSemana" jhiTranslate="oncallApp.ventanaDeMantenimiento.diaSemana">Dia Semana</label>
-          <select class="form-control" name="diaSemana" formControlName="diaSemana" id="field_diaSemana" data-cy="diaSemana">
-            <option [ngValue]="null">{{ 'oncallApp.DiaSemana.null' | translate }}</option>
-            @for (diaSemana of diaSemanaValues; track $index) {
-              <option [value]="diaSemana">{{ 'oncallApp.DiaSemana.' + diaSemana | translate }}</option>
+        @if (editForm.controls.tipo.value === 'UNICA') {
+          @let inicioRef = editForm.get('inicio')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_inicio" jhiTranslate="oncallApp.ventanaDeMantenimiento.inicio">Inicio</label>
+            <div class="d-flex">
+              <input
+                id="field_inicio"
+                data-cy="inicio"
+                type="datetime-local"
+                class="form-control"
+                name="inicio"
+                formControlName="inicio"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+            @if (inicioRef.invalid && (inicioRef.dirty || inicioRef.touched)) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
             }
-          </select>
-        </div>
-
-        @let minutoInicioRef = editForm.get('minutoInicio')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_minutoInicio" jhiTranslate="oncallApp.ventanaDeMantenimiento.minutoInicio"
-            >Minuto Inicio</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="minutoInicio"
-            id="field_minutoInicio"
-            data-cy="minutoInicio"
-            formControlName="minutoInicio"
-          />
-          @if (minutoInicioRef.invalid && (minutoInicioRef.dirty || minutoInicioRef.touched)) {
-            <div>
-              @if (minutoInicioRef.errors?.min) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '0' }"
-                  >Este campo debe ser mayor que 0.</small
-                >
-              }
-              @if (minutoInicioRef.errors?.max) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.max" [translateValues]="{ max: '1439' }"
-                  >Este campo no puede ser mayor que 1439.</small
-                >
-              }
-              <small class="form-text text-danger" [hidden]="!minutoInicioRef.errors?.number" jhiTranslate="entity.validation.number"
-                >Este campo debe ser un número.</small
-              >
-            </div>
-          }
-        </div>
-
-        @let minutoFinRef = editForm.get('minutoFin')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_minutoFin" jhiTranslate="oncallApp.ventanaDeMantenimiento.minutoFin">Minuto Fin</label>
-          <input type="number" class="form-control" name="minutoFin" id="field_minutoFin" data-cy="minutoFin" formControlName="minutoFin" />
-          @if (minutoFinRef.invalid && (minutoFinRef.dirty || minutoFinRef.touched)) {
-            <div>
-              @if (minutoFinRef.errors?.min) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '0' }"
-                  >Este campo debe ser mayor que 0.</small
-                >
-              }
-              @if (minutoFinRef.errors?.max) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.max" [translateValues]="{ max: '1439' }"
-                  >Este campo no puede ser mayor que 1439.</small
-                >
-              }
-              <small class="form-text text-danger" [hidden]="!minutoFinRef.errors?.number" jhiTranslate="entity.validation.number"
-                >Este campo debe ser un número.</small
-              >
-            </div>
-          }
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_vigenteDesde" jhiTranslate="oncallApp.ventanaDeMantenimiento.vigenteDesde"
-            >Vigente Desde</label
-          >
-          <div class="input-group">
-            <input
-              id="field_vigenteDesde"
-              data-cy="vigenteDesde"
-              type="text"
-              class="form-control"
-              name="vigenteDesde"
-              ngbDatepicker
-              #vigenteDesdeDp="ngbDatepicker"
-              formControlName="vigenteDesde"
-            />
-            <button type="button" class="btn btn-secondary" (click)="vigenteDesdeDp.toggle()"><fa-icon icon="calendar-alt" /></button>
           </div>
-        </div>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_vigenteHasta" jhiTranslate="oncallApp.ventanaDeMantenimiento.vigenteHasta"
-            >Vigente Hasta</label
-          >
-          <div class="input-group">
-            <input
-              id="field_vigenteHasta"
-              data-cy="vigenteHasta"
-              type="text"
-              class="form-control"
-              name="vigenteHasta"
-              ngbDatepicker
-              #vigenteHastaDp="ngbDatepicker"
-              formControlName="vigenteHasta"
-            />
-            <button type="button" class="btn btn-secondary" (click)="vigenteHastaDp.toggle()"><fa-icon icon="calendar-alt" /></button>
+          @let finRef = editForm.get('fin')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_fin" jhiTranslate="oncallApp.ventanaDeMantenimiento.fin">Fin</label>
+            <div class="d-flex">
+              <input
+                id="field_fin"
+                data-cy="fin"
+                type="datetime-local"
+                class="form-control"
+                name="fin"
+                formControlName="fin"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+            </div>
+            @if (finRef.invalid && (finRef.dirty || finRef.touched)) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+            @if (editForm.errors?.invalidInterval && (finRef.dirty || finRef.touched)) {
+              <small class="form-text text-danger" jhiTranslate="error.invalidInterval">El fin debe ser posterior al inicio.</small>
+            }
           </div>
-        </div>
+        }
+
+        @if (editForm.controls.tipo.value === 'SEMANAL') {
+          @let diaSemanaRef = editForm.get('diaSemana')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_diaSemana" jhiTranslate="oncallApp.ventanaDeMantenimiento.diaSemana">Dia Semana</label>
+            <select class="form-control" name="diaSemana" formControlName="diaSemana" id="field_diaSemana" data-cy="diaSemana">
+              <option [ngValue]="null">{{ 'oncallApp.DiaSemana.null' | translate }}</option>
+              @for (diaSemana of diaSemanaValues; track $index) {
+                <option [value]="diaSemana">{{ 'oncallApp.DiaSemana.' + diaSemana | translate }}</option>
+              }
+            </select>
+            @if (diaSemanaRef.invalid && (diaSemanaRef.dirty || diaSemanaRef.touched)) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+
+          @let minutoInicioRef = editForm.get('minutoInicio')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_minutoInicio" jhiTranslate="oncallApp.ventanaDeMantenimiento.minutoInicio"
+              >Minuto Inicio</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="minutoInicio"
+              id="field_minutoInicio"
+              data-cy="minutoInicio"
+              formControlName="minutoInicio"
+            />
+            @if (minutoInicioRef.invalid && (minutoInicioRef.dirty || minutoInicioRef.touched)) {
+              <div>
+                @if (minutoInicioRef.errors?.min) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '0' }"
+                    >Este campo debe ser mayor o igual que 0.</small
+                  >
+                }
+                @if (minutoInicioRef.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+                @if (minutoInicioRef.errors?.max) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.max" [translateValues]="{ max: '1439' }"
+                    >Este campo no puede ser mayor que 1439.</small
+                  >
+                }
+                <small class="form-text text-danger" [hidden]="!minutoInicioRef.errors?.number" jhiTranslate="entity.validation.number"
+                  >Este campo debe ser un número.</small
+                >
+              </div>
+            }
+          </div>
+
+          @let minutoFinRef = editForm.get('minutoFin')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_minutoFin" jhiTranslate="oncallApp.ventanaDeMantenimiento.minutoFin">Minuto Fin</label>
+            <input
+              type="number"
+              class="form-control"
+              name="minutoFin"
+              id="field_minutoFin"
+              data-cy="minutoFin"
+              formControlName="minutoFin"
+            />
+            @if (minutoFinRef.invalid && (minutoFinRef.dirty || minutoFinRef.touched)) {
+              <div>
+                @if (minutoFinRef.errors?.min) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '0' }"
+                    >Este campo debe ser mayor o igual que 0.</small
+                  >
+                }
+                @if (minutoFinRef.errors?.required) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+                }
+                @if (minutoFinRef.errors?.max) {
+                  <small class="form-text text-danger" jhiTranslate="entity.validation.max" [translateValues]="{ max: '1439' }"
+                    >Este campo no puede ser mayor que 1439.</small
+                  >
+                }
+                <small class="form-text text-danger" [hidden]="!minutoFinRef.errors?.number" jhiTranslate="entity.validation.number"
+                  >Este campo debe ser un número.</small
+                >
+              </div>
+            }
+          </div>
+
+          @let vigenteDesdeRef = editForm.get('vigenteDesde')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_vigenteDesde" jhiTranslate="oncallApp.ventanaDeMantenimiento.vigenteDesde"
+              >Vigente Desde</label
+            >
+            <div class="input-group">
+              <input
+                id="field_vigenteDesde"
+                data-cy="vigenteDesde"
+                type="text"
+                class="form-control"
+                name="vigenteDesde"
+                ngbDatepicker
+                #vigenteDesdeDp="ngbDatepicker"
+                formControlName="vigenteDesde"
+              />
+              <button type="button" class="btn btn-secondary" (click)="vigenteDesdeDp.toggle()"><fa-icon icon="calendar-alt" /></button>
+            </div>
+            @if (vigenteDesdeRef.invalid && (vigenteDesdeRef.dirty || vigenteDesdeRef.touched)) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">Este campo es obligatorio.</small>
+            }
+          </div>
+
+          @let vigenteHastaRef = editForm.get('vigenteHasta')!;
+          <div class="mb-3">
+            <label class="form-label" for="field_vigenteHasta" jhiTranslate="oncallApp.ventanaDeMantenimiento.vigenteHasta"
+              >Vigente Hasta</label
+            >
+            <div class="input-group">
+              <input
+                id="field_vigenteHasta"
+                data-cy="vigenteHasta"
+                type="text"
+                class="form-control"
+                name="vigenteHasta"
+                ngbDatepicker
+                #vigenteHastaDp="ngbDatepicker"
+                formControlName="vigenteHasta"
+              />
+              <button type="button" class="btn btn-secondary" (click)="vigenteHastaDp.toggle()"><fa-icon icon="calendar-alt" /></button>
+            </div>
+            @if (editForm.errors?.invalidValidity && (vigenteHastaRef.dirty || vigenteHastaRef.touched)) {
+              <small class="form-text text-danger" jhiTranslate="error.invalidValidity"
+                >La vigencia hasta no puede ser anterior a la vigencia desde.</small
+              >
+            }
+          </div>
+        }
 
         @let activaRef = editForm.get('activa')!;
         <div class="mb-3">

@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -31,11 +32,16 @@ export class VentanaDeMantenimientoUpdate implements OnInit {
   protected ventanaDeMantenimientoService = inject(VentanaDeMantenimientoService);
   protected ventanaDeMantenimientoFormService = inject(VentanaDeMantenimientoFormService);
   protected activatedRoute = inject(ActivatedRoute);
+  private readonly destroyRef = inject(DestroyRef);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: VentanaDeMantenimientoFormGroup = this.ventanaDeMantenimientoFormService.createVentanaDeMantenimientoFormGroup();
 
   ngOnInit(): void {
+    this.editForm.controls.tipo.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(tipo => {
+      this.ventanaDeMantenimientoFormService.updateFormForType(this.editForm, tipo, true);
+    });
+
     this.activatedRoute.data.subscribe(({ ventanaDeMantenimiento }) => {
       this.ventanaDeMantenimiento = ventanaDeMantenimiento;
       if (ventanaDeMantenimiento) {
