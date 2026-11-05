@@ -22,7 +22,6 @@ application {
     enableHibernateCache true
 
     clientFramework angular
-    clientTheme flatly
     buildTool maven
 
     enableTranslation true
@@ -95,7 +94,7 @@ entity Alerta {
   fingerprint String required maxlength(120)
   origen OrigenAlerta required
   resumen String required maxlength(200)
-  payload TextBlob
+  payload String maxlength(4000)
   recibidaEn Instant required
   procesada Boolean required
 }
@@ -106,7 +105,7 @@ entity Alerta {
  */
 entity Incidente {
   titulo String required maxlength(140)
-  descripcion TextBlob
+  descripcion String maxlength(2000)
   severidad Severidad required
   estado EstadoIncidente required
   detectadoEn Instant required
@@ -196,7 +195,65 @@ enum Canal {
 }
 
 // ---------------------------------------------------------------------
-// 4 · RESPUESTA Y APRENDIZAJE
+// 4 · VENTANAS DE MANTENIMIENTO
+// ---------------------------------------------------------------------
+
+/**
+ * Periodo programado durante el cual un servicio esta en mantenimiento.
+ *
+ * Para una ventana UNICA se usan inicio y fin. Para una ventana SEMANAL
+ * se usan diaSemana, minutoInicio y minutoFin en la zonaHoraria indicada.
+ * Si minutoFin es menor o igual que minutoInicio, el intervalo termina
+ * al dia siguiente.
+ */
+entity VentanaDeMantenimiento {
+  nombre String required unique maxlength(80)
+  descripcion String maxlength(500)
+  tipo TipoVentana required
+  zonaHoraria String required maxlength(50)
+  inicio Instant
+  fin Instant
+  diaSemana DiaSemana
+  minutoInicio Integer min(0) max(1439)
+  minutoFin Integer min(0) max(1439)
+  vigenteDesde LocalDate
+  vigenteHasta LocalDate
+  activa Boolean required
+}
+
+/**
+ * Asignacion explicita de una ventana de mantenimiento a un servicio.
+ */
+entity ServicioEnVentana {
+  activo Boolean required
+  nota String maxlength(255)
+}
+
+/**
+ * Excepcion concreta de una ventana. Una cancelacion elimina una
+ * ocurrencia; una inclusion agrega una ocurrencia extraordinaria.
+ */
+entity ExcepcionDeVentana {
+  tipo TipoExcepcionVentana required
+  desde Instant required
+  hasta Instant required
+  motivo String maxlength(255)
+}
+
+enum TipoVentana {
+  UNICA, SEMANAL
+}
+
+enum DiaSemana {
+  LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO
+}
+
+enum TipoExcepcionVentana {
+  INCLUSION, CANCELACION
+}
+
+// ---------------------------------------------------------------------
+// 5 · RESPUESTA Y APRENDIZAJE
 // ---------------------------------------------------------------------
 
 /**
@@ -217,9 +274,9 @@ entity Notificacion {
 entity Postmortem {
   titulo String required maxlength(140)
   resumen String required maxlength(500)
-  causaRaiz TextBlob required
-  lineaDeTiempo TextBlob
-  leccionesAprendidas TextBlob
+  causaRaiz String required maxlength(2000)
+  lineaDeTiempo String maxlength(4000)
+  leccionesAprendidas String maxlength(2000)
   publicado Boolean required
   publicadoEn Instant
 }
@@ -258,6 +315,10 @@ relationship ManyToOne {
   Alerta{servicio(nombre) required} to Servicio{alerta}
   Alerta{incidente(titulo)} to Incidente{alerta}
   EventoDeIncidente{incidente(titulo) required} to Incidente{evento}
+
+  ServicioEnVentana{servicio(nombre) required} to Servicio{servicioEnVentana}
+  ServicioEnVentana{ventana(nombre) required} to VentanaDeMantenimiento{servicioEnVentana}
+  ExcepcionDeVentana{ventana(nombre) required} to VentanaDeMantenimiento{excepcion}
 
   Rotacion{equipo(nombre) required} to Equipo{rotacion}
   TurnoDeGuardia{rotacion(nombre) required} to Rotacion{turno}
