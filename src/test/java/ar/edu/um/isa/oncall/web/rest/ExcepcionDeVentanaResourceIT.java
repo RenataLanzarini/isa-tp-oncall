@@ -52,8 +52,8 @@ class ExcepcionDeVentanaResourceIT {
     private static final Instant DEFAULT_DESDE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DESDE = Instant.ofEpochMilli(1701729143509L);
 
-    private static final Instant DEFAULT_HASTA = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_HASTA = Instant.ofEpochMilli(1701729143509L);
+    private static final Instant DEFAULT_HASTA = Instant.ofEpochMilli(3600000L);
+    private static final Instant UPDATED_HASTA = Instant.ofEpochMilli(1701732743509L);
 
     private static final String DEFAULT_MOTIVO = "AAAAAAAAAA";
     private static final String UPDATED_MOTIVO = "BBBBBBBBBB";
@@ -177,6 +177,21 @@ class ExcepcionDeVentanaResourceIT {
         );
 
         insertedExcepcionDeVentana = returnedExcepcionDeVentana;
+    }
+
+    @Test
+    @Transactional
+    void rejectExcepcionWithInvalidInterval() throws Exception {
+        excepcionDeVentana.setHasta(DEFAULT_DESDE);
+        long databaseSizeBeforeCreate = getRepositoryCount();
+        ExcepcionDeVentanaDTO dto = excepcionDeVentanaMapper.toDto(excepcionDeVentana);
+
+        restExcepcionDeVentanaMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(dto)))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.message").value("error.invalidInterval"));
+
+        assertSameRepositoryCount(databaseSizeBeforeCreate);
     }
 
     @Test

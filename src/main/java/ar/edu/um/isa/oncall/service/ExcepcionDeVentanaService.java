@@ -45,6 +45,7 @@ public class ExcepcionDeVentanaService {
     public ExcepcionDeVentanaDTO save(ExcepcionDeVentanaDTO excepcionDeVentanaDTO) {
         LOG.debug("Request to save ExcepcionDeVentana : {}", excepcionDeVentanaDTO);
         ExcepcionDeVentana excepcionDeVentana = excepcionDeVentanaMapper.toEntity(excepcionDeVentanaDTO);
+        MaintenanceWindowValidator.validate(excepcionDeVentana);
         excepcionDeVentana = excepcionDeVentanaRepository.save(excepcionDeVentana);
         return excepcionDeVentanaMapper.toDto(excepcionDeVentana);
     }
@@ -58,6 +59,7 @@ public class ExcepcionDeVentanaService {
     public ExcepcionDeVentanaDTO update(ExcepcionDeVentanaDTO excepcionDeVentanaDTO) {
         LOG.debug("Request to update ExcepcionDeVentana : {}", excepcionDeVentanaDTO);
         ExcepcionDeVentana excepcionDeVentana = excepcionDeVentanaMapper.toEntity(excepcionDeVentanaDTO);
+        MaintenanceWindowValidator.validate(excepcionDeVentana);
         excepcionDeVentana = excepcionDeVentanaRepository.save(excepcionDeVentana);
         return excepcionDeVentanaMapper.toDto(excepcionDeVentana);
     }
@@ -75,6 +77,8 @@ public class ExcepcionDeVentanaService {
             .findById(excepcionDeVentanaDTO.getId())
             .map(existingExcepcionDeVentana -> {
                 excepcionDeVentanaMapper.partialUpdate(existingExcepcionDeVentana, excepcionDeVentanaDTO);
+
+                MaintenanceWindowValidator.validate(existingExcepcionDeVentana);
 
                 return existingExcepcionDeVentana;
             })

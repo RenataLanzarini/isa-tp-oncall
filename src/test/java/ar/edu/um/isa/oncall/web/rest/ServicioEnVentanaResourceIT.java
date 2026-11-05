@@ -183,6 +183,27 @@ class ServicioEnVentanaResourceIT {
 
     @Test
     @Transactional
+    void rejectDuplicateServiceWindowAssociation() throws Exception {
+        insertedServicioEnVentana = servicioEnVentanaRepository.saveAndFlush(servicioEnVentana);
+        long databaseSizeBeforeCreate = getRepositoryCount();
+
+        ServicioEnVentana duplicate = new ServicioEnVentana()
+            .activo(true)
+            .nota("duplicada")
+            .servicio(servicioEnVentana.getServicio())
+            .ventana(servicioEnVentana.getVentana());
+        ServicioEnVentanaDTO dto = servicioEnVentanaMapper.toDto(duplicate);
+
+        restServicioEnVentanaMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(dto)))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.message").value("error.duplicateAssociation"));
+
+        assertSameRepositoryCount(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
     void createServicioEnVentanaWithExistingId() throws Exception {
         // Create the ServicioEnVentana with an existing ID
         servicioEnVentana.setId(1L);

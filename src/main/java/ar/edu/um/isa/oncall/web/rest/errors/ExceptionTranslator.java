@@ -2,6 +2,7 @@ package ar.edu.um.isa.oncall.web.rest.errors;
 
 import static org.springframework.core.annotation.AnnotatedElementUtils.findMergedAnnotation;
 
+import ar.edu.um.isa.oncall.service.MaintenanceWindowValidationException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import java.net.URI;
@@ -88,6 +89,13 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
     }
 
     private ProblemDetailWithCause getProblemDetailWithCause(Throwable ex) {
+        if (
+            ex instanceof MaintenanceWindowValidationException validationException
+        ) return (ProblemDetailWithCause) new BadRequestAlertException(
+            validationException.getMessage(),
+            validationException.getEntityName(),
+            validationException.getErrorKey()
+        ).getBody();
         if (
             ex instanceof ar.edu.um.isa.oncall.service.UsernameAlreadyUsedException
         ) return (ProblemDetailWithCause) new LoginAlreadyUsedException().getBody();
@@ -225,6 +233,7 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
         if (err instanceof ConcurrencyFailureException) return HttpStatus.CONFLICT;
         if (err instanceof BadCredentialsException) return HttpStatus.UNAUTHORIZED;
         if (err instanceof ConstraintViolationException) return HttpStatus.BAD_REQUEST;
+        if (err instanceof MaintenanceWindowValidationException) return HttpStatus.BAD_REQUEST;
         return null;
     }
 
@@ -234,6 +243,15 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
     }
 
     private HttpHeaders buildHeaders(Throwable err) {
+        if (err instanceof MaintenanceWindowValidationException validationException) {
+            return HeaderUtil.createFailureAlert(
+                applicationName,
+                true,
+                validationException.getEntityName(),
+                validationException.getErrorKey(),
+                validationException.getMessage()
+            );
+        }
         return err instanceof BadRequestAlertException badRequestAlertException
             ? HeaderUtil.createFailureAlert(
                   applicationName,

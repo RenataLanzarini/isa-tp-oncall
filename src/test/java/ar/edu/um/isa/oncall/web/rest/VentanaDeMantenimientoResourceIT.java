@@ -47,14 +47,14 @@ class VentanaDeMantenimientoResourceIT {
     private static final TipoVentana DEFAULT_TIPO = TipoVentana.UNICA;
     private static final TipoVentana UPDATED_TIPO = TipoVentana.SEMANAL;
 
-    private static final String DEFAULT_ZONA_HORARIA = "AAAAAAAAAA";
-    private static final String UPDATED_ZONA_HORARIA = "BBBBBBBBBB";
+    private static final String DEFAULT_ZONA_HORARIA = "UTC";
+    private static final String UPDATED_ZONA_HORARIA = "America/Argentina/Buenos_Aires";
 
     private static final Instant DEFAULT_INICIO = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_INICIO = Instant.ofEpochMilli(1701729143509L);
 
-    private static final Instant DEFAULT_FIN = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_FIN = Instant.ofEpochMilli(1701729143509L);
+    private static final Instant DEFAULT_FIN = Instant.ofEpochMilli(3600000L);
+    private static final Instant UPDATED_FIN = Instant.ofEpochMilli(1701732743509L);
 
     private static final DiaSemana DEFAULT_DIA_SEMANA = DiaSemana.LUNES;
     private static final DiaSemana UPDATED_DIA_SEMANA = DiaSemana.MARTES;
@@ -113,11 +113,6 @@ class VentanaDeMantenimientoResourceIT {
             .zonaHoraria(DEFAULT_ZONA_HORARIA)
             .inicio(DEFAULT_INICIO)
             .fin(DEFAULT_FIN)
-            .diaSemana(DEFAULT_DIA_SEMANA)
-            .minutoInicio(DEFAULT_MINUTO_INICIO)
-            .minutoFin(DEFAULT_MINUTO_FIN)
-            .vigenteDesde(DEFAULT_VIGENTE_DESDE)
-            .vigenteHasta(DEFAULT_VIGENTE_HASTA)
             .activa(DEFAULT_ACTIVA);
     }
 
@@ -133,8 +128,6 @@ class VentanaDeMantenimientoResourceIT {
             .descripcion(UPDATED_DESCRIPCION)
             .tipo(UPDATED_TIPO)
             .zonaHoraria(UPDATED_ZONA_HORARIA)
-            .inicio(UPDATED_INICIO)
-            .fin(UPDATED_FIN)
             .diaSemana(UPDATED_DIA_SEMANA)
             .minutoInicio(UPDATED_MINUTO_INICIO)
             .minutoFin(UPDATED_MINUTO_FIN)
@@ -183,6 +176,64 @@ class VentanaDeMantenimientoResourceIT {
         );
 
         insertedVentanaDeMantenimiento = returnedVentanaDeMantenimiento;
+    }
+
+    @Test
+    @Transactional
+    void createWeeklyVentanaDeMantenimiento() throws Exception {
+        ventanaDeMantenimiento = createUpdatedEntity();
+        long databaseSizeBeforeCreate = getRepositoryCount();
+
+        VentanaDeMantenimientoDTO dto = ventanaDeMantenimientoMapper.toDto(ventanaDeMantenimiento);
+        restVentanaDeMantenimientoMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(dto)))
+            .andExpect(status().isCreated());
+
+        assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void rejectOneTimeWindowWithoutAbsoluteInterval() throws Exception {
+        ventanaDeMantenimiento.setInicio(null);
+        assertInvalidWindow("error.missingOneTimeFields");
+    }
+
+    @Test
+    @Transactional
+    void rejectOneTimeWindowWithInvalidInterval() throws Exception {
+        ventanaDeMantenimiento.setFin(DEFAULT_INICIO);
+        assertInvalidWindow("error.invalidInterval");
+    }
+
+    @Test
+    @Transactional
+    void rejectOneTimeWindowWithWeeklyFields() throws Exception {
+        ventanaDeMantenimiento.setDiaSemana(DEFAULT_DIA_SEMANA);
+        assertInvalidWindow("error.unexpectedWeeklyFields");
+    }
+
+    @Test
+    @Transactional
+    void rejectWeeklyWindowWithoutRecurrenceFields() throws Exception {
+        ventanaDeMantenimiento = createUpdatedEntity();
+        ventanaDeMantenimiento.setMinutoFin(null);
+        assertInvalidWindow("error.missingWeeklyFields");
+    }
+
+    @Test
+    @Transactional
+    void rejectWindowWithInvalidValidity() throws Exception {
+        ventanaDeMantenimiento = createUpdatedEntity();
+        ventanaDeMantenimiento.setVigenteHasta(UPDATED_VIGENTE_DESDE.minusDays(1));
+        assertInvalidWindow("error.invalidValidity");
+    }
+
+    @Test
+    @Transactional
+    void rejectWindowWithInvalidTimeZone() throws Exception {
+        ventanaDeMantenimiento.setZonaHoraria("zona-inexistente");
+        assertInvalidWindow("error.invalidTimeZone");
     }
 
     @Test
@@ -289,11 +340,6 @@ class VentanaDeMantenimientoResourceIT {
             .andExpect(jsonPath("$.[*].zonaHoraria").value(hasItem(DEFAULT_ZONA_HORARIA)))
             .andExpect(jsonPath("$.[*].inicio").value(hasItem(DEFAULT_INICIO.toString())))
             .andExpect(jsonPath("$.[*].fin").value(hasItem(DEFAULT_FIN.toString())))
-            .andExpect(jsonPath("$.[*].diaSemana").value(hasItem(DEFAULT_DIA_SEMANA.toString())))
-            .andExpect(jsonPath("$.[*].minutoInicio").value(hasItem(DEFAULT_MINUTO_INICIO)))
-            .andExpect(jsonPath("$.[*].minutoFin").value(hasItem(DEFAULT_MINUTO_FIN)))
-            .andExpect(jsonPath("$.[*].vigenteDesde").value(hasItem(DEFAULT_VIGENTE_DESDE.toString())))
-            .andExpect(jsonPath("$.[*].vigenteHasta").value(hasItem(DEFAULT_VIGENTE_HASTA.toString())))
             .andExpect(jsonPath("$.[*].activa").value(hasItem(DEFAULT_ACTIVA)));
     }
 
@@ -315,11 +361,6 @@ class VentanaDeMantenimientoResourceIT {
             .andExpect(jsonPath("$.zonaHoraria").value(DEFAULT_ZONA_HORARIA))
             .andExpect(jsonPath("$.inicio").value(DEFAULT_INICIO.toString()))
             .andExpect(jsonPath("$.fin").value(DEFAULT_FIN.toString()))
-            .andExpect(jsonPath("$.diaSemana").value(DEFAULT_DIA_SEMANA.toString()))
-            .andExpect(jsonPath("$.minutoInicio").value(DEFAULT_MINUTO_INICIO))
-            .andExpect(jsonPath("$.minutoFin").value(DEFAULT_MINUTO_FIN))
-            .andExpect(jsonPath("$.vigenteDesde").value(DEFAULT_VIGENTE_DESDE.toString()))
-            .andExpect(jsonPath("$.vigenteHasta").value(DEFAULT_VIGENTE_HASTA.toString()))
             .andExpect(jsonPath("$.activa").value(DEFAULT_ACTIVA));
     }
 
@@ -349,8 +390,8 @@ class VentanaDeMantenimientoResourceIT {
             .descripcion(UPDATED_DESCRIPCION)
             .tipo(UPDATED_TIPO)
             .zonaHoraria(UPDATED_ZONA_HORARIA)
-            .inicio(UPDATED_INICIO)
-            .fin(UPDATED_FIN)
+            .inicio(null)
+            .fin(null)
             .diaSemana(UPDATED_DIA_SEMANA)
             .minutoInicio(UPDATED_MINUTO_INICIO)
             .minutoFin(UPDATED_MINUTO_FIN)
@@ -450,9 +491,6 @@ class VentanaDeMantenimientoResourceIT {
             .nombre(UPDATED_NOMBRE)
             .descripcion(UPDATED_DESCRIPCION)
             .zonaHoraria(UPDATED_ZONA_HORARIA)
-            .inicio(UPDATED_INICIO)
-            .fin(UPDATED_FIN)
-            .minutoFin(UPDATED_MINUTO_FIN)
             .activa(UPDATED_ACTIVA);
 
         restVentanaDeMantenimientoMockMvc
@@ -487,15 +525,10 @@ class VentanaDeMantenimientoResourceIT {
         partialUpdatedVentanaDeMantenimiento
             .nombre(UPDATED_NOMBRE)
             .descripcion(UPDATED_DESCRIPCION)
-            .tipo(UPDATED_TIPO)
+            .tipo(DEFAULT_TIPO)
             .zonaHoraria(UPDATED_ZONA_HORARIA)
             .inicio(UPDATED_INICIO)
             .fin(UPDATED_FIN)
-            .diaSemana(UPDATED_DIA_SEMANA)
-            .minutoInicio(UPDATED_MINUTO_INICIO)
-            .minutoFin(UPDATED_MINUTO_FIN)
-            .vigenteDesde(UPDATED_VIGENTE_DESDE)
-            .vigenteHasta(UPDATED_VIGENTE_HASTA)
             .activa(UPDATED_ACTIVA);
 
         restVentanaDeMantenimientoMockMvc
@@ -598,6 +631,18 @@ class VentanaDeMantenimientoResourceIT {
 
     protected long getRepositoryCount() {
         return ventanaDeMantenimientoRepository.count();
+    }
+
+    private void assertInvalidWindow(String message) throws Exception {
+        long databaseSizeBeforeCreate = getRepositoryCount();
+        VentanaDeMantenimientoDTO dto = ventanaDeMantenimientoMapper.toDto(ventanaDeMantenimiento);
+
+        restVentanaDeMantenimientoMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(dto)))
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.message").value(message));
+
+        assertSameRepositoryCount(databaseSizeBeforeCreate);
     }
 
     protected void assertIncrementedRepositoryCount(long countBefore) {

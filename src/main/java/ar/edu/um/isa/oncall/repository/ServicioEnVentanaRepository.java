@@ -14,6 +14,10 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ServicioEnVentanaRepository extends JpaRepository<ServicioEnVentana, Long> {
+    boolean existsByServicioIdAndVentanaId(Long servicioId, Long ventanaId);
+
+    boolean existsByServicioIdAndVentanaIdAndIdNot(Long servicioId, Long ventanaId, Long id);
+
     default Optional<ServicioEnVentana> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }

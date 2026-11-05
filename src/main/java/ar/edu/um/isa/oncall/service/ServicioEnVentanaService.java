@@ -45,6 +45,7 @@ public class ServicioEnVentanaService {
     public ServicioEnVentanaDTO save(ServicioEnVentanaDTO servicioEnVentanaDTO) {
         LOG.debug("Request to save ServicioEnVentana : {}", servicioEnVentanaDTO);
         ServicioEnVentana servicioEnVentana = servicioEnVentanaMapper.toEntity(servicioEnVentanaDTO);
+        validateUniqueAssociation(servicioEnVentana);
         servicioEnVentana = servicioEnVentanaRepository.save(servicioEnVentana);
         return servicioEnVentanaMapper.toDto(servicioEnVentana);
     }
@@ -58,6 +59,7 @@ public class ServicioEnVentanaService {
     public ServicioEnVentanaDTO update(ServicioEnVentanaDTO servicioEnVentanaDTO) {
         LOG.debug("Request to update ServicioEnVentana : {}", servicioEnVentanaDTO);
         ServicioEnVentana servicioEnVentana = servicioEnVentanaMapper.toEntity(servicioEnVentanaDTO);
+        validateUniqueAssociation(servicioEnVentana);
         servicioEnVentana = servicioEnVentanaRepository.save(servicioEnVentana);
         return servicioEnVentanaMapper.toDto(servicioEnVentana);
     }
@@ -75,6 +77,8 @@ public class ServicioEnVentanaService {
             .findById(servicioEnVentanaDTO.getId())
             .map(existingServicioEnVentana -> {
                 servicioEnVentanaMapper.partialUpdate(existingServicioEnVentana, servicioEnVentanaDTO);
+
+                validateUniqueAssociation(existingServicioEnVentana);
 
                 return existingServicioEnVentana;
             })
@@ -126,5 +130,30 @@ public class ServicioEnVentanaService {
     public void delete(Long id) {
         LOG.debug("Request to delete ServicioEnVentana : {}", id);
         servicioEnVentanaRepository.deleteById(id);
+    }
+
+    private void validateUniqueAssociation(ServicioEnVentana servicioEnVentana) {
+        if (servicioEnVentana.getServicio() == null || servicioEnVentana.getVentana() == null) {
+            return;
+        }
+
+        Long servicioId = servicioEnVentana.getServicio().getId();
+        Long ventanaId = servicioEnVentana.getVentana().getId();
+        if (servicioId == null || ventanaId == null) {
+            return;
+        }
+
+        boolean duplicate =
+            servicioEnVentana.getId() == null
+                ? servicioEnVentanaRepository.existsByServicioIdAndVentanaId(servicioId, ventanaId)
+                : servicioEnVentanaRepository.existsByServicioIdAndVentanaIdAndIdNot(servicioId, ventanaId, servicioEnVentana.getId());
+
+        if (duplicate) {
+            throw new MaintenanceWindowValidationException(
+                "El servicio ya está asociado a la ventana de mantenimiento",
+                "servicioEnVentana",
+                "duplicateAssociation"
+            );
+        }
     }
 }

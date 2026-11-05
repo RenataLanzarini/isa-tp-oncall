@@ -43,6 +43,7 @@ public class VentanaDeMantenimientoService {
     public VentanaDeMantenimientoDTO save(VentanaDeMantenimientoDTO ventanaDeMantenimientoDTO) {
         LOG.debug("Request to save VentanaDeMantenimiento : {}", ventanaDeMantenimientoDTO);
         VentanaDeMantenimiento ventanaDeMantenimiento = ventanaDeMantenimientoMapper.toEntity(ventanaDeMantenimientoDTO);
+        MaintenanceWindowValidator.validate(ventanaDeMantenimiento);
         ventanaDeMantenimiento = ventanaDeMantenimientoRepository.save(ventanaDeMantenimiento);
         return ventanaDeMantenimientoMapper.toDto(ventanaDeMantenimiento);
     }
@@ -56,6 +57,7 @@ public class VentanaDeMantenimientoService {
     public VentanaDeMantenimientoDTO update(VentanaDeMantenimientoDTO ventanaDeMantenimientoDTO) {
         LOG.debug("Request to update VentanaDeMantenimiento : {}", ventanaDeMantenimientoDTO);
         VentanaDeMantenimiento ventanaDeMantenimiento = ventanaDeMantenimientoMapper.toEntity(ventanaDeMantenimientoDTO);
+        MaintenanceWindowValidator.validate(ventanaDeMantenimiento);
         ventanaDeMantenimiento = ventanaDeMantenimientoRepository.save(ventanaDeMantenimiento);
         return ventanaDeMantenimientoMapper.toDto(ventanaDeMantenimiento);
     }
@@ -73,6 +75,8 @@ public class VentanaDeMantenimientoService {
             .findById(ventanaDeMantenimientoDTO.getId())
             .map(existingVentanaDeMantenimiento -> {
                 ventanaDeMantenimientoMapper.partialUpdate(existingVentanaDeMantenimiento, ventanaDeMantenimientoDTO);
+
+                MaintenanceWindowValidator.validate(existingVentanaDeMantenimiento);
 
                 return existingVentanaDeMantenimiento;
             })
